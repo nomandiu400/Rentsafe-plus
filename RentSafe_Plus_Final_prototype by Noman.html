@@ -1,0 +1,2044 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cdefs%3E%3ClinearGradient%20id%3D%22g%22%20x1%3D%220%22%20y1%3D%220%22%20x2%3D%221%22%20y2%3D%221%22%3E%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%2314b8a6%22/%3E%3Cstop%20offset%3D%2260%25%22%20stop-color%3D%22%230f766e%22/%3E%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%230f172a%22/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect%20width%3D%2248%22%20height%3D%2248%22%20rx%3D%2213%22%20fill%3D%22url%28%23g%29%22/%3E%3Cpath%20d%3D%22M24%2010L12%2018.2V26.5C12%2033.4%2017.2%2038.4%2024%2040C30.8%2038.4%2036%2033.4%2036%2026.5V18.2L24%2010Z%22%20fill%3D%22none%22%20stroke%3D%22%23fff%22%20stroke-width%3D%222.8%22%20stroke-linejoin%3D%22round%22/%3E%3Cpath%20d%3D%22M24%2019.5V31.5M18%2025.5H30%22%20stroke%3D%22%23fbbf24%22%20stroke-width%3D%223.4%22%20stroke-linecap%3D%22round%22/%3E%3C/svg%3E" />
+  <title>RentSafe+ | Clean Region-Wise Rental & P2P Marketplace</title>
+  <style>
+    :root {
+      --primary: #0f766e;
+      --primary-hover: #115e59;
+      --primary-soft: #f0fdfa;
+      --primary-mid: #ccfbf1;
+      --accent: #f59e0b;
+      --accent-soft: #fef3c7;
+      --blue: #2563eb;
+      --blue-soft: #eff6ff;
+      --danger: #dc2626;
+      --danger-soft: #fee2e2;
+      --success: #16a34a;
+      --success-soft: #dcfce7;
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --surface-alt: #f8fafc;
+      --nav-bg: rgba(255, 255, 255, 0.95);
+      --text: #0f172a;
+      --text-secondary: #475569;
+      --muted: #64748b;
+      --border: #e2e8f0;
+      --radius-lg: 18px;
+      --radius-md: 12px;
+      --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 10px 25px rgba(15, 23, 42, 0.08);
+      --shadow-lg: 0 20px 42px rgba(15, 23, 42, 0.14);
+      --ai-bg: linear-gradient(135deg, #f0fdfa 0%, #eff6ff 100%);
+      --ai-border: #99f6e4;
+    }
+
+    [data-theme="dark"] {
+      --primary: #14b8a6;
+      --primary-hover: #0d9488;
+      --primary-soft: rgba(20, 184, 166, 0.14);
+      --primary-mid: rgba(20, 184, 166, 0.28);
+      --accent: #fbbf24;
+      --accent-soft: rgba(251, 191, 36, 0.16);
+      --blue-soft: rgba(59, 130, 246, 0.18);
+      --danger: #f87171;
+      --danger-soft: rgba(248, 113, 113, 0.16);
+      --success: #4ade80;
+      --success-soft: rgba(74, 222, 128, 0.16);
+      --bg: #0b1120;
+      --surface: #111827;
+      --surface-alt: #1e293b;
+      --nav-bg: rgba(17, 24, 39, 0.95);
+      --text: #f8fafc;
+      --text-secondary: #cbd5e1;
+      --muted: #94a3b8;
+      --border: #1f2937;
+      --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.35);
+      --shadow-md: 0 12px 28px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 22px 44px rgba(0, 0, 0, 0.65);
+      --ai-bg: linear-gradient(135deg, rgba(20, 184, 166, 0.14) 0%, rgba(59, 130, 246, 0.14) 100%);
+      --ai-border: rgba(20, 184, 166, 0.35);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', 'Hind Siliguri', system-ui, -apple-system, sans-serif; }
+    body { background: var(--bg); color: var(--text); line-height: 1.55; transition: background 0.25s, color 0.25s; min-height: 100vh; }
+
+    /* ================= FULL-SCREEN LOGIN GATE ================= */
+    #authGate {
+      min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 24px 16px;
+      background: radial-gradient(circle at top left, rgba(15,118,110,0.16), transparent 45%),
+                  radial-gradient(circle at bottom right, rgba(37,99,235,0.12), transparent 45%), var(--bg);
+    }
+    .gate-top-bar { width: 100%; max-width: 980px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .gate-card {
+      width: 100%; max-width: 980px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 24px; box-shadow: var(--shadow-lg); overflow: hidden; display: grid; grid-template-columns: 1.08fr 1fr;
+    }
+    .gate-left {
+      background: linear-gradient(145deg, #0f172a 0%, #0f766e 62%, #14b8a6 100%);
+      color: #fff; padding: 36px 32px; display: flex; flex-direction: column; justify-content: space-between; gap: 20px;
+    }
+    .gate-left h2 { font-size: 1.82rem; font-weight: 800; line-height: 1.25; margin-top: 12px; }
+    .gate-left p { color: #e2e8f0; font-size: 0.91rem; margin-top: 8px; }
+    .gate-highlights { display: flex; flex-direction: column; gap: 9px; }
+    .gate-hl {
+      background: rgba(255,255,255,0.12); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.18); border-radius: 12px;
+      padding: 10px 13px; font-size: 0.84rem; display: flex; align-items: center; gap: 10px;
+    }
+    .gate-right { padding: 32px 30px; display: flex; flex-direction: column; justify-content: center; }
+
+    .demo-creds { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-top: 14px; font-size: 0.8rem; }
+    .cred-row {
+      display: flex; justify-content: space-between; align-items: center; gap: 8px;
+      padding: 8px 10px; border-radius: 9px; margin-top: 6px; background: var(--surface);
+      border: 1px solid var(--border); cursor: pointer; transition: 0.15s;
+    }
+    .cred-row:hover { border-color: var(--primary); transform: translateX(2px); }
+
+    /* ================= MAIN APP SHELL ================= */
+    #appShell { display: none; }
+    .demo-banner {
+      background: #020617; color: #e2e8f0; text-align: center;
+      padding: 7px 14px; font-size: 0.78rem; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap;
+    }
+    .demo-pill { background: #f59e0b; color: #0f172a; font-weight: 800; padding: 2px 8px; border-radius: 99px; font-size: 0.69rem; }
+
+    header { background: var(--nav-bg); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+    .nav-wrap { max-width: 1280px; margin: 0 auto; padding: 11px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+    .brand-icon {
+      width: 38px; height: 38px; border-radius: 10px; background: linear-gradient(135deg, #0f766e, #14b8a6);
+      display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 900; font-size: 1.05rem;
+    }
+    .brand-text h1 { font-size: 1.18rem; font-weight: 800; color: var(--text); line-height: 1.1; }
+    .brand-text span { font-size: 0.71rem; color: var(--muted); font-weight: 600; display: block; }
+
+    nav { display: flex; gap: 4px; flex-wrap: wrap; background: var(--surface-alt); padding: 4px; border-radius: 12px; border: 1px solid var(--border); }
+    nav button {
+      background: transparent; border: none; padding: 8px 12px; border-radius: 9px; cursor: pointer;
+      font-weight: 600; color: var(--text-secondary); transition: 0.2s; font-size: 0.84rem; display: flex; align-items: center; gap: 5px;
+    }
+    nav button:hover { color: var(--text); }
+    nav button.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow-sm); }
+
+    .header-controls { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .ctrl-btn {
+      background: var(--surface-alt); border: 1px solid var(--border); color: var(--text);
+      padding: 7px 11px; border-radius: 10px; font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: 0.2s;
+    }
+    .ctrl-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .user-pill {
+      background: var(--primary-soft); border: 1px solid var(--primary-mid); color: var(--primary);
+      padding: 7px 13px; border-radius: 99px; font-weight: 700; font-size: 0.83rem; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    main { max-width: 1280px; margin: 22px auto; padding: 0 18px 70px; }
+    .section { display: none; animation: slideUp 0.26s ease; }
+    .section.active { display: block; }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(125deg, #0f172a 0%, #0f766e 60%, #14b8a6 100%);
+      color: #fff; padding: 28px 26px; border-radius: var(--radius-lg); margin-bottom: 20px; box-shadow: var(--shadow-md);
+    }
+    .hero-grid { display: grid; grid-template-columns: 1.45fr 1fr; gap: 20px; align-items: center; }
+    .hero h2 { font-size: 1.8rem; font-weight: 800; line-height: 1.25; margin-bottom: 8px; }
+    .hero p { color: #e2e8f0; font-size: 0.92rem; max-width: 590px; }
+    .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-tile {
+      background: rgba(255,255,255,0.12); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 14px; padding: 12px; cursor: pointer; transition: 0.2s;
+    }
+    .stat-tile:hover { background: rgba(255,255,255,0.22); transform: translateY(-2px); }
+    .stat-tile strong { display: block; font-size: 0.88rem; margin-top: 2px; }
+    .stat-tile span { font-size: 0.75rem; color: #e2e8f0; }
+
+    .search-box {
+      background: var(--surface); padding: 10px; border-radius: 14px; margin-top: 18px;
+      display: grid; grid-template-columns: 2fr 1fr 1fr auto; gap: 10px; box-shadow: var(--shadow-lg);
+    }
+    .search-box input, .search-box select {
+      background: var(--surface-alt); border: 1px solid var(--border); color: var(--text);
+      padding: 10px 13px; border-radius: 10px; font-size: 0.89rem; outline: none;
+    }
+
+    /* Region Filter Bar */
+    .region-bar {
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-bottom: 18px;
+      padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+    }
+    .region-label { font-size: 0.8rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-right: 4px; }
+    .reg-pill {
+      padding: 7px 14px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface-alt);
+      color: var(--text-secondary); font-weight: 700; font-size: 0.82rem; cursor: pointer; transition: 0.18s;
+    }
+    .reg-pill:hover { border-color: var(--primary); color: var(--primary); }
+    .reg-pill.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    /* Buttons */
+    .btn {
+      background: var(--primary); color: #fff; border: none; padding: 10px 16px; border-radius: 10px;
+      font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 0.87rem; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn:hover { background: var(--primary-hover); }
+    .btn-soft { background: var(--primary-soft); color: var(--primary); border: 1px solid var(--primary-mid); padding: 8px 13px; border-radius: 10px; font-weight: 700; cursor: pointer; font-size: 0.83rem; }
+    .btn-outline { background: var(--surface); color: var(--text-secondary); border: 1px solid var(--border); padding: 8px 12px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.83rem; }
+    .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-danger { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(220,38,38,0.3); padding: 7px 12px; border-radius: 8px; font-weight: 700; cursor: pointer; font-size: 0.82rem; }
+
+    /* Grids & Cards */
+    .sec-head { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 16px; }
+    .sec-head h2 { font-size: 1.38rem; font-weight: 800; }
+    .sec-head p { font-size: 0.87rem; color: var(--muted); }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(325px, 1fr)); gap: 20px; }
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      padding: 20px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 13px; transition: 0.2s;
+    }
+    .card.hoverable:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+
+    .prop-visual { height: 168px; border-radius: 12px; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; padding: 12px; }
+    .prop-visual svg.bg-art { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; }
+    .prop-top, .prop-bottom { position: relative; z-index: 1; display: flex; justify-content: space-between; align-items: center; gap: 6px; flex-wrap: wrap; }
+
+    .badge { display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 99px; font-size: 0.73rem; font-weight: 700; }
+    .b-green { background: var(--success-soft); color: var(--success); }
+    .b-yellow { background: var(--accent-soft); color: #b45309; }
+    [data-theme="dark"] .b-yellow { color: #fbbf24; }
+    .b-red { background: var(--danger-soft); color: var(--danger); }
+    .b-blue { background: var(--blue-soft); color: #3b82f6; }
+    .b-dark { background: rgba(15, 23, 42, 0.82); color: #fff; backdrop-filter: blur(4px); }
+
+    .price-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+    .price { font-size: 1.3rem; font-weight: 800; color: var(--primary); }
+    .true-cost-tag { font-size: 0.75rem; background: var(--primary-soft); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 700; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: var(--surface-alt); border: 1px solid var(--border); color: var(--text-secondary); padding: 4px 8px; border-radius: 8px; font-size: 0.76rem; font-weight: 600; }
+
+    /* Map */
+    .map-panel { display: none; background: var(--surface-alt); border-radius: var(--radius-lg); height: 370px; position: relative; overflow: hidden; margin-bottom: 20px; border: 2px solid var(--border); }
+    .map-panel.open { display: block; }
+    .map-pin {
+      position: absolute; background: #0f172a; color: #fff; padding: 5px 11px; border-radius: 99px;
+      font-size: 0.75rem; font-weight: 700; cursor: pointer; box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+      transition: 0.2s; z-index: 2; display: flex; align-items: center; gap: 5px; border: 1px solid rgba(255,255,255,0.22);
+    }
+    .map-pin:hover { background: var(--primary); transform: scale(1.08); z-index: 5; }
+    .pin-dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; }
+
+    /* Area Reality & AI Deep Analyst */
+    .area-tabs { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 14px; }
+    .area-tab { padding: 7px 13px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); font-weight: 700; font-size: 0.81rem; cursor: pointer; color: var(--text-secondary); }
+    .area-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+    .gauge-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(115px, 1fr)); gap: 10px; }
+    .gauge-card { background: var(--surface-alt); border: 1px solid var(--border); border-radius: 14px; padding: 12px 8px; text-align: center; }
+    .ring { width: 62px; height: 62px; border-radius: 50%; margin: 0 auto 6px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.88rem; }
+    .ring-inner { width: 46px; height: 46px; border-radius: 50%; background: var(--surface-alt); display: flex; align-items: center; justify-content: center; color: var(--text); }
+    .gauge-card span { font-size: 0.76rem; font-weight: 700; color: var(--text-secondary); }
+
+    .ai-card { background: var(--ai-bg); border: 1px solid var(--ai-border); border-radius: 14px; padding: 15px; }
+    .ai-header { display: flex; align-items: center; justify-content: space-between; gap: 6px; font-weight: 800; color: var(--primary); margin-bottom: 8px; font-size: 0.9rem; flex-wrap: wrap; }
+    .ai-meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 10px; }
+    .ai-mini-box { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 9px 11px; font-size: 0.8rem; }
+    .ai-mini-box strong { display: block; font-size: 0.74rem; color: var(--muted); text-transform: uppercase; margin-bottom: 2px; }
+
+    /* Cost Donut */
+    .cost-visual-wrap { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; background: var(--surface-alt); border: 1px solid var(--border); padding: 16px; border-radius: 14px; }
+    .donut { width: 118px; height: 118px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
+    .donut-hole { width: 80px; height: 80px; border-radius: 50%; background: var(--surface-alt); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+    .donut-hole small { font-size: 0.65rem; color: var(--muted); font-weight: 700; }
+    .donut-hole strong { font-size: 0.92rem; color: var(--primary); }
+    .legend { display: flex; flex-direction: column; gap: 6px; font-size: 0.84rem; flex: 1; }
+    .legend-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .dot { width: 10px; height: 10px; border-radius: 3px; display: inline-block; margin-right: 6px; }
+
+    /* Forms & Tables */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field label { font-size: 0.8rem; font-weight: 700; color: var(--text-secondary); }
+    .field input, .field select, .field textarea {
+      padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.89rem; outline: none; background: var(--surface-alt); color: var(--text);
+    }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--primary); }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.85rem; }
+    th { background: var(--surface-alt); font-weight: 700; color: var(--text-secondary); }
+
+    /* Moving & Checklists */
+    .progress-track { height: 10px; background: var(--border); border-radius: 99px; overflow: hidden; margin: 6px 0 12px; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #0f766e, #14b8a6); transition: width 0.3s; }
+    .stepper { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 12px; }
+    .step { padding: 9px 6px; border-radius: 10px; text-align: center; font-size: 0.75rem; font-weight: 700; background: var(--surface-alt); color: var(--muted); border: 1px solid var(--border); }
+    .step.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .check-row { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface-alt); margin-bottom: 8px; cursor: pointer; }
+    .check-row.done span { text-decoration: line-through; color: var(--muted); }
+
+    .item-art { height: 112px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2.7rem; position: relative; }
+    .lock-card { text-align: center; padding: 36px 20px; border: 2px dashed var(--border); border-radius: var(--radius-lg); background: var(--surface-alt); }
+    .lock-card .lock-icon { font-size: 2.4rem; margin-bottom: 8px; display: block; }
+
+    .auth-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: var(--surface-alt); padding: 4px; border-radius: 10px; margin-bottom: 14px; }
+    .auth-tab { border: none; background: transparent; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; color: var(--muted); }
+    .auth-tab.active { background: var(--surface); color: var(--primary); box-shadow: var(--shadow-sm); }
+
+    .modal-bg { position: fixed; inset: 0; background: rgba(2, 6, 23, 0.68); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 16px; }
+    .modal-bg.open { display: flex; }
+    .modal { background: var(--surface); color: var(--text); width: 100%; max-width: 540px; max-height: 90vh; overflow-y: auto; border-radius: var(--radius-lg); padding: 24px; position: relative; box-shadow: var(--shadow-lg); border: 1px solid var(--border); }
+    .close-btn { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--surface-alt); color: var(--text); cursor: pointer; font-weight: 800; }
+    .toast { position: fixed; bottom: 20px; right: 20px; background: #0f172a; color: #fff; padding: 12px 18px; border-radius: 12px; font-size: 0.85rem; font-weight: 600; display: none; z-index: 300; box-shadow: var(--shadow-lg); border: 1px solid rgba(255,255,255,0.12); }
+
+    @media (max-width: 860px) {
+      .gate-card, .hero-grid, .search-box, .form-grid, .ai-meta-grid { grid-template-columns: 1fr; }
+      .gate-left { padding: 24px 20px; }
+      .gate-right { padding: 22px 20px; }
+    }
+
+    /* P2P Marketplace Sub-tabs & Inbox */
+    .mkt-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .mkt-tab {
+      padding: 9px 16px; border-radius: 12px; border: 1px solid var(--border);
+      background: var(--surface); color: var(--text-secondary); font-weight: 700;
+      font-size: 0.85rem; cursor: pointer; display: inline-flex; align-items: center; gap: 7px; transition: 0.2s;
+    }
+    .mkt-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+    .notif-dot {
+      background: var(--danger); color: #fff; font-size: 0.7rem; font-weight: 800;
+      padding: 1px 6px; border-radius: 99px;
+    }
+    .inbox-layout {
+      display: grid; grid-template-columns: 310px 1fr; gap: 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+      overflow: hidden; min-height: 470px; box-shadow: var(--shadow-sm);
+    }
+    .inbox-sidebar {
+      border-right: 1px solid var(--border); background: var(--surface-alt);
+      display: flex; flex-direction: column; overflow-y: auto; max-height: 540px;
+    }
+    .thread-item {
+      padding: 13px 14px; border-bottom: 1px solid var(--border); cursor: pointer;
+      transition: 0.15s; display: flex; flex-direction: column; gap: 4px;
+    }
+    .thread-item:hover { background: var(--surface); }
+    .thread-item.active { background: var(--primary-soft); border-left: 4px solid var(--primary); }
+    .chat-pane { display: flex; flex-direction: column; height: 540px; background: var(--surface); }
+    .chat-header {
+      padding: 13px 16px; border-bottom: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap;
+      background: var(--surface-alt);
+    }
+    .chat-messages {
+      flex: 1; padding: 16px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;
+    }
+    .msg-bubble {
+      max-width: 78%; padding: 10px 13px; border-radius: 14px; font-size: 0.87rem; line-height: 1.45;
+    }
+    .msg-me { align-self: flex-end; background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+    .msg-them { align-self: flex-start; background: var(--surface-alt); color: var(--text); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+    .msg-system {
+      align-self: center; background: var(--accent-soft); color: var(--text);
+      border: 1px solid var(--border); font-size: 0.78rem; font-weight: 700;
+      padding: 6px 12px; border-radius: 99px; text-align: center;
+    }
+    .msg-time { font-size: 0.68rem; opacity: 0.72; margin-top: 3px; display: block; text-align: right; }
+    .chat-actions-bar {
+      padding: 8px 14px; border-top: 1px solid var(--border); background: var(--surface-alt);
+      display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+    }
+    .chat-input-bar {
+      padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--surface);
+    }
+    .chat-input-bar input {
+      flex: 1; padding: 10px 12px; border: 1px solid var(--border); border-radius: 10px;
+      background: var(--surface-alt); color: var(--text); outline: none; font-size: 0.89rem;
+    }
+    @media (max-width: 860px) {
+      .inbox-layout { grid-template-columns: 1fr; }
+      .inbox-sidebar { max-height: 200px; border-right: none; border-bottom: 1px solid var(--border); }
+    }
+
+    /* Clean Photo Upload & Post Description */
+    .prop-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
+    .prop-photo-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(15,23,42,0.35), rgba(15,23,42,0.08), rgba(15,23,42,0.55)); z-index: 0; }
+    .item-photo-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+    .post-desc {
+      font-size: 0.82rem; color: var(--text-secondary); line-height: 1.45;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      padding: 8px 10px; border-radius: 10px;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .post-desc-full {
+      font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55;
+      background: var(--surface-alt); border: 1px solid var(--border);
+      padding: 12px 14px; border-radius: 12px; margin-bottom: 12px; white-space: pre-line;
+    }
+    .upload-box {
+      border: 2px dashed var(--border); border-radius: 10px; padding: 10px;
+      background: var(--surface-alt); text-align: center; cursor: pointer; transition: 0.2s;
+    }
+    .upload-box:hover { border-color: var(--primary); }
+    .upload-preview { margin-top: 8px; display: flex; justify-content: center; }
+    .upload-preview img { max-height: 90px; max-width: 100%; object-fit: cover; border-radius: 8px; border: 1px solid var(--border); }
+
+    /* Ownership & Copyright Footer */
+    .app-footer {
+      text-align: center;
+      padding: 20px 16px;
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+    .app-footer strong { color: var(--text); }
+    .gate-footer {
+      margin-top: 18px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+    .gate-footer strong { color: var(--text); }
+
+    /* Brand SVG Logo & Wordmark */
+    .brand-svg {
+      width: 40px; height: 40px; flex-shrink: 0; display: block;
+      filter: drop-shadow(0 4px 10px rgba(15, 118, 110, 0.28));
+      transition: transform 0.22s ease;
+    }
+    .brand:hover .brand-svg { transform: scale(1.06) rotate(-2deg); }
+    .brand-wordmark {
+      font-size: 1.26rem; font-weight: 900; letter-spacing: -0.4px;
+      color: var(--text); line-height: 1.05; display: flex; align-items: center;
+    }
+    .brand-wordmark .plus-accent {
+      color: #f59e0b; font-weight: 900; margin-left: 1px;
+    }
+    .brand-wordmark .safe-accent {
+      color: var(--primary);
+    }
+    .footer-brand {
+      display: inline-flex; align-items: center; gap: 7px; vertical-align: middle; margin-right: 4px;
+    }
+    .footer-brand .brand-svg { width: 22px; height: 22px; filter: none; }
+  </style>
+</head>
+<body>
+
+<!-- ==================== 1. FULL-SCREEN LOGIN INTERFACE ==================== -->
+<div id="authGate">
+  <div class="gate-top-bar">
+    <div class="brand">
+      <svg class="brand-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RentSafe+ Logo">
+        <defs>
+          <linearGradient id="rsBgGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#14b8a6"/>
+            <stop offset="55%" stop-color="#0f766e"/>
+            <stop offset="100%" stop-color="#0f172a"/>
+          </linearGradient>
+          <linearGradient id="rsGoldGrad" x1="20" y1="18" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fde047"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#rsBgGrad)"/>
+        <rect x="2.75" y="2.75" width="42.5" height="42.5" rx="12.25" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+        <!-- Geometric Shield + House Roof Mark -->
+        <path d="M24 10L12 18.2V26.5C12 33.4 17.2 38.4 24 40C30.8 38.4 36 33.4 36 26.5V18.2L24 10Z" fill="rgba(255,255,255,0.14)" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- Bold Roof Accent -->
+        <path d="M10.5 19.2L24 9.8L37.5 19.2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Iconic Plus (+) / Spark Emblem in Gold -->
+        <path d="M24 19.5V31.5M18 25.5H30" stroke="url(#rsGoldGrad)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg>
+      <div class="brand-text">
+        <div class="brand-wordmark">Rent<span class="safe-accent">Safe</span><span class="plus-accent">+</span></div>
+        <span data-i18n="brandSub">Greater Dhaka & DIU Smart City</span>
+      </div>
+    </div>
+    <div class="header-controls">
+      <button class="ctrl-btn lang-toggle-btn" onclick="toggleLang()">🌐 বাংলা</button>
+      <button class="ctrl-btn theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+    </div>
+  </div>
+
+  <div class="gate-card">
+    <div class="gate-left">
+      <div>
+        <span class="badge b-dark">🏙️ Full Dhaka • Uttara • Mirpur • DIU Ashulia</span>
+        <h2 data-i18n="gateTitle">Know Every Dhaka Neighborhood Before You Sign a Lease.</h2>
+        <p data-i18n="gateDesc">Region-wise rental intelligence across North Dhaka, West & Central Dhaka, East & South Dhaka, and DIU Smart City (Ashulia) — with AI-analyzed area reports.</p>
+      </div>
+      <div class="gate-highlights">
+        <div class="gate-hl">🗺️ <span data-i18n="hl1">4 Dhaka Regions: Uttara, Mirpur, Dhanmondi, Bashundhara, Badda & DIU Ashulia</span></div>
+        <div class="gate-hl">✨ <span data-i18n="hl2">Accurate AI Area Analysis: Utilities, Gas Type, Metro Access & Flood Risk</span></div>
+        <div class="gate-hl">🧮 <span data-i18n="hl3">True Monthly Cost Calculator & Side-by-Side Flat Comparison</span></div>
+        <div class="gate-hl">🚚 <span data-i18n="hl4">Used Furniture Marketplace, Moving Sales & Verified Movers</span></div>
+      </div>
+    </div>
+
+    <div class="gate-right">
+      <h3 style="margin-bottom:12px; font-size:1.25rem;" data-i18n="authHead">🔐 Sign in to RentSafe+</h3>
+      <div class="auth-tabs">
+        <button id="tLogin" class="auth-tab active" onclick="switchAuthTab('login')" data-i18n="tabLogin">Login</button>
+        <button id="tReg" class="auth-tab" onclick="switchAuthTab('reg')" data-i18n="tabReg">Register</button>
+      </div>
+
+      <div id="loginForm">
+        <div class="field" style="margin-bottom:10px;">
+          <label data-i18n="lblEmail">Gmail / Email</label>
+          <input id="inEmail" type="email" placeholder="student@gmail.com">
+        </div>
+        <div class="field" style="margin-bottom:12px;">
+          <label data-i18n="lblPass">Password</label>
+          <input id="inPass" type="password" placeholder="••••••" onkeydown="if(event.key==='Enter') handleLogin()">
+        </div>
+        <div id="authErr" style="color:var(--danger); font-size:0.82rem; font-weight:700; margin-bottom:10px; display:none;"></div>
+        <button class="btn" style="width:100%; padding:11px;" onclick="handleLogin()" data-i18n="btnLoginNow">Login to App →</button>
+
+        <div class="demo-creds">
+          <strong style="color:var(--primary);" data-i18n="demoCredTitle">⚡ Demo Accounts (Click to Auto-Fill):</strong>
+          <div class="cred-row" onclick="fillDemo('student@gmail.com','123456')">
+            <div><strong>Tenant / Student:</strong> student@gmail.com</div>
+            <span class="badge b-blue">123456</span>
+          </div>
+          <div class="cred-row" onclick="fillDemo('landlord@gmail.com','123456')">
+            <div><strong>Landlord:</strong> landlord@gmail.com</div>
+            <span class="badge b-green">123456</span>
+          </div>
+          <div class="cred-row" onclick="fillDemo('admin@gmail.com','admin123')">
+            <div><strong>Admin:</strong> admin@gmail.com</div>
+            <span class="badge b-yellow">admin123</span>
+          </div>
+        </div>
+      </div>
+
+      <div id="regForm" style="display:none;">
+        <div class="field" style="margin-bottom:10px;"><label data-i18n="lblName">Full Name</label><input id="regName" placeholder="e.g., Tahmid Hasan"></div>
+        <div class="field" style="margin-bottom:10px;"><label data-i18n="lblEmail">Gmail / Email</label><input id="regEmail" type="email" placeholder="yourname@gmail.com"></div>
+        <div class="field" style="margin-bottom:10px;"><label data-i18n="lblPass">Password</label><input id="regPass" type="password" placeholder="Min 4 characters"></div>
+        <div class="field" style="margin-bottom:14px;"><label data-i18n="lblRole">Account Type</label>
+          <select id="regRole">
+            <option value="Tenant">Tenant / Student</option>
+            <option value="Landlord">Landlord (House Owner)</option>
+          </select>
+        </div>
+        <button class="btn" style="width:100%; padding:11px;" onclick="handleRegister()" data-i18n="btnCreateAcc">Create Account & Enter →</button>
+      </div>
+    </div>
+  </div>
+  <div class="gate-footer">
+    <span class="footer-brand"><svg class="brand-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RentSafe+ Logo">
+        <defs>
+          <linearGradient id="rsBgGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#14b8a6"/>
+            <stop offset="55%" stop-color="#0f766e"/>
+            <stop offset="100%" stop-color="#0f172a"/>
+          </linearGradient>
+          <linearGradient id="rsGoldGrad" x1="20" y1="18" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fde047"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#rsBgGrad)"/>
+        <rect x="2.75" y="2.75" width="42.5" height="42.5" rx="12.25" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+        <!-- Geometric Shield + House Roof Mark -->
+        <path d="M24 10L12 18.2V26.5C12 33.4 17.2 38.4 24 40C30.8 38.4 36 33.4 36 26.5V18.2L24 10Z" fill="rgba(255,255,255,0.14)" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- Bold Roof Accent -->
+        <path d="M10.5 19.2L24 9.8L37.5 19.2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Iconic Plus (+) / Spark Emblem in Gold -->
+        <path d="M24 19.5V31.5M18 25.5H30" stroke="url(#rsGoldGrad)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg><strong>RentSafe+</strong></span> • © 2026 — <span data-i18n="creditText">Concept & Interactive Prototype by</span> <strong>Md Abdullah Al Noman</strong>. <span data-i18n="rightsText">All Rights Reserved.</span>
+  </div>
+</div>
+
+<!-- ==================== 2. MAIN APPLICATION INTERFACE ==================== -->
+<div id="appShell">
+  <div class="demo-banner">
+    <span class="demo-pill" data-i18n="demoBadge">GREATER DHAKA + DIU</span>
+    <span data-i18n="demoText">Region-wise coverage: North Dhaka, West & Central Dhaka, East & South Dhaka, and DIU Ashulia.</span>
+  </div>
+
+  <header>
+    <div class="nav-wrap">
+      <div class="brand" onclick="goTab('explore')">
+        <svg class="brand-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RentSafe+ Logo">
+        <defs>
+          <linearGradient id="rsBgGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#14b8a6"/>
+            <stop offset="55%" stop-color="#0f766e"/>
+            <stop offset="100%" stop-color="#0f172a"/>
+          </linearGradient>
+          <linearGradient id="rsGoldGrad" x1="20" y1="18" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fde047"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#rsBgGrad)"/>
+        <rect x="2.75" y="2.75" width="42.5" height="42.5" rx="12.25" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+        <!-- Geometric Shield + House Roof Mark -->
+        <path d="M24 10L12 18.2V26.5C12 33.4 17.2 38.4 24 40C30.8 38.4 36 33.4 36 26.5V18.2L24 10Z" fill="rgba(255,255,255,0.14)" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- Bold Roof Accent -->
+        <path d="M10.5 19.2L24 9.8L37.5 19.2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Iconic Plus (+) / Spark Emblem in Gold -->
+        <path d="M24 19.5V31.5M18 25.5H30" stroke="url(#rsGoldGrad)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg>
+        <div class="brand-text">
+          <div class="brand-wordmark">Rent<span class="safe-accent">Safe</span><span class="plus-accent">+</span></div>
+          <span data-i18n="brandSub">Greater Dhaka & DIU Smart City</span>
+        </div>
+      </div>
+
+      <nav id="topNav">
+        <button class="active" onclick="goTab('explore', this)">🏠 <span data-i18n="navHomes">Homes</span></button>
+        <button onclick="goTab('area', this)">📊 <span data-i18n="navArea">Area Reality</span></button>
+        <button onclick="goTab('calc', this)">🧮 <span data-i18n="navCalc">Cost & Compare</span></button>
+        <button onclick="goTab('market', this)">🛋️ <span data-i18n="navMarket">Marketplace</span></button>
+        <button onclick="goTab('moving', this)">🚚 <span data-i18n="navMoving">Moving</span></button>
+        <button onclick="goTab('portal', this)">🔐 <span data-i18n="navPortal">Portal</span></button>
+      </nav>
+
+      <div class="header-controls">
+        <button class="ctrl-btn lang-toggle-btn" onclick="toggleLang()">🌐 বাংলা</button>
+        <button class="ctrl-btn theme-toggle-btn" onclick="toggleTheme()">🌙</button>
+        <button class="user-pill" id="userBtn" onclick="openModal('profileModal')">👤 User</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- TAB 1: EXPLORE HOMES -->
+    <section id="explore" class="section active">
+      <div class="hero">
+        <div class="hero-grid">
+          <div>
+            <h2 data-i18n="heroTitle">Rent Smarter Across All of Dhaka & DIU Ashulia.</h2>
+            <p data-i18n="heroDesc">Browse region-wise verified flats with realistic utility info (Titas gas vs cylinder, Metro Rail access, WASA water, monsoon drainage) before moving in.</p>
+          </div>
+          <div class="hero-stats">
+            <div class="stat-tile" onclick="goTab('area')">
+              ✨ <strong data-i18n="tileArea">AI Area Reality</strong>
+              <span data-i18n="tileAreaSub">Accurate local analysis</span>
+            </div>
+            <div class="stat-tile" onclick="goTab('calc')">
+              🧮 <strong data-i18n="tileCost">True Cost</strong>
+              <span data-i18n="tileCostSub">Rent + hidden charges</span>
+            </div>
+            <div class="stat-tile" onclick="goTab('market')">
+              📦 <strong data-i18n="tileMarket">Moving Sales</strong>
+              <span data-i18n="tileMarketSub">Used items by region</span>
+            </div>
+            <div class="stat-tile" onclick="goTab('moving')">
+              🚚 <strong data-i18n="tileMove">Mover Tracking</strong>
+              <span data-i18n="tileMoveSub">Dhaka & Ashulia vans</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="search-box">
+          <input id="qSearch" type="text" data-i18n-ph="searchPh" placeholder="🔍 Search Uttara, Mirpur, Dhanmondi, Bashundhara, Aftabnagar, Dattapara..." oninput="renderHomes()" />
+          <select id="qBudget" onchange="renderHomes()">
+            <option value="999999" data-i18n="anyRent">💰 Any Monthly Rent</option>
+            <option value="12000">≤ ৳12,000 (Student / Budget)</option>
+            <option value="20000">≤ ৳20,000 (Mid-Range)</option>
+            <option value="30000">≤ ৳30,000 (Family 3-Bed)</option>
+          </select>
+          <select id="qFilter" onchange="renderHomes()">
+            <option value="all" data-i18n="allList">✨ All Listings</option>
+            <option value="fav" data-i18n="favList">❤️ Saved Favourites</option>
+            <option value="safe" data-i18n="safeList">✅ Low Flood Risk Only</option>
+          </select>
+          <button class="btn" onclick="toggleMap()">🗺️ <span data-i18n="btnMap">Dhaka Map</span></button>
+        </div>
+      </div>
+
+      <!-- REGION-WISE FILTER BAR -->
+      <div class="region-bar" id="homeRegionBar"></div>
+
+      <!-- INTERACTIVE GREATER DHAKA MAP -->
+      <div id="mapPanel" class="map-panel">
+        <svg width="100%" height="100%" style="position:absolute; inset:0; opacity:0.48;">
+          <rect width="100%" height="100%" fill="#94a3b8"/>
+          <path d="M0,115 Q320,130 640,120 T1250,140" stroke="#ffffff" stroke-width="14" fill="none"/>
+          <path d="M0,255 Q380,235 760,260 T1250,245" stroke="#ffffff" stroke-width="12" fill="none"/>
+          <path d="M240,0 L280,380 M600,0 L580,380 M920,0 L890,380" stroke="#ffffff" stroke-width="11" fill="none"/>
+        </svg>
+        <div style="position:relative; z-index:2; padding:9px 14px; display:inline-block; background:var(--surface); margin:12px; border-radius:10px; font-size:0.8rem; font-weight:700;" data-i18n="mapHint">
+          🗺️ Greater Dhaka & DIU Ashulia Map — Click any pin to inspect flat & true cost
+        </div>
+        <div id="mapPins"></div>
+      </div>
+
+      <div class="sec-head">
+        <div>
+          <h2 id="homesTitle">Available Homes Across Dhaka</h2>
+          <p data-i18n="homesSub">Region tag, base rent, true monthly cost, and flood risk on every card.</p>
+        </div>
+        <button class="btn-soft" onclick="goTab('calc')">⚖️ <span data-i18n="btnCompare">Compare</span> (<span id="compBadge">2</span>)</button>
+      </div>
+      <div id="homesGrid" class="grid-3"></div>
+    </section>
+
+    <!-- TAB 2: AREA REALITY & AI ANALYST -->
+    <section id="area" class="section">
+      <div class="sec-head">
+        <div>
+          <h2 data-i18n="areaTitle">AI Area Reality Report & Resident Q&A</h2>
+          <p data-i18n="areaSub">Select a Dhaka region, then pick an area for accurate utility, transit, flood & fair-rent analysis.</p>
+        </div>
+      </div>
+
+      <div class="region-bar" id="areaRegionBar"></div>
+      <div class="area-tabs" id="areaTabs"></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <h3 id="selectedAreaTitle">Area Scorecard</h3>
+              <span id="selectedRegionTag" style="font-size:0.8rem; color:var(--muted); font-weight:600;">Region</span>
+            </div>
+            <span id="floodPill" class="badge b-green">Low Flood Risk</span>
+          </div>
+          <div id="gaugeGrid" class="gauge-grid"></div>
+
+          <!-- ACCURATE AI ANALYSIS PANEL -->
+          <div class="ai-card">
+            <div class="ai-header">
+              <span>✨ <span data-i18n="aiSumTitle">AI Ground-Reality Analysis</span></span>
+              <span class="badge b-blue" id="aiBestFor">Best for: Families</span>
+            </div>
+            <p id="aiAreaSummary" style="font-size:0.87rem; color:var(--text-secondary);"></p>
+            <div class="ai-meta-grid">
+              <div class="ai-mini-box"><strong data-i18n="aiRentLbl">Fair Rent Benchmark</strong><span id="aiRentRange"></span></div>
+              <div class="ai-mini-box"><strong data-i18n="aiGasLbl">Gas & Power Reality</strong><span id="aiGasPower"></span></div>
+              <div class="ai-mini-box"><strong data-i18n="aiTransLbl">Transit & Commute</strong><span id="aiTransit"></span></div>
+              <div class="ai-mini-box"><strong data-i18n="aiWarnLbl">Key Watch-out</strong><span id="aiWatchout"></span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3>💬 <span data-i18n="qaTitle">Ask a Local Resident</span></h3>
+          <div style="display:flex; gap:8px;">
+            <input id="qaText" type="text" data-i18n-ph="qaPh" placeholder="Ask about WASA water, Metro access, gas..." style="flex:1; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-alt); color:var(--text);">
+            <button class="btn" onclick="submitQA()" data-i18n="btnAsk">Ask</button>
+          </div>
+          <div id="qaContainer" style="display:flex; flex-direction:column; gap:10px;"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <h3 data-i18n="revTitle">Resident Reviews (Verified vs Unverified)</h3>
+          <button class="btn-soft" onclick="openModal('reviewModal')">✍️ <span data-i18n="btnWriteRev">Write a Review</span></button>
+        </div>
+        <div class="grid-2">
+          <div>
+            <div style="font-weight:800; color:var(--success); font-size:0.84rem; margin-bottom:8px;" data-i18n="verRevHead">✅ VERIFIED RESIDENT REPORTS</div>
+            <div id="verRevList" style="display:flex; flex-direction:column; gap:10px;"></div>
+          </div>
+          <div>
+            <div style="font-weight:800; color:var(--accent); font-size:0.84rem; margin-bottom:8px;" data-i18n="unverRevHead">⚠️ UNVERIFIED USER REPORTS</div>
+            <div id="unverRevList" style="display:flex; flex-direction:column; gap:10px;"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 3: COST & COMPARE -->
+    <section id="calc" class="section">
+      <div class="sec-head">
+        <div>
+          <h2 data-i18n="calcTitle">True Monthly Cost & Comparison</h2>
+          <p data-i18n="calcSub">Compare actual monthly living expenses across different Dhaka regions.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>🧮 <span data-i18n="calcCard">True Monthly Cost Calculator</span></h3>
+          <div class="cost-visual-wrap">
+            <div class="donut" id="costDonut">
+              <div class="donut-hole">
+                <small data-i18n="totalMo">TOTAL/MO</small>
+                <strong id="donutTotal">৳26,880</strong>
+              </div>
+            </div>
+            <div class="legend" id="costLegend"></div>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label data-i18n="lblRent">Base Rent (৳)</label><input type="number" id="cRent" value="20000" oninput="updateCalculator()"></div>
+            <div class="field"><label data-i18n="lblServ">Service Charge (৳)</label><input type="number" id="cService" value="2500" oninput="updateCalculator()"></div>
+            <div class="field"><label data-i18n="lblGas">Gas / Cylinder (৳)</label><input type="number" id="cGas" value="1080" oninput="updateCalculator()"></div>
+            <div class="field"><label data-i18n="lblWater">Water & Waste (৳)</label><input type="number" id="cWater" value="800" oninput="updateCalculator()"></div>
+            <div class="field"><label data-i18n="lblPark">Parking / Garage (৳)</label><input type="number" id="cPark" value="1500" oninput="updateCalculator()"></div>
+            <div class="field"><label data-i18n="lblOther">Broadband / Other (৳)</label><input type="number" id="cOther" value="1000" oninput="updateCalculator()"></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h3>⚖️ <span data-i18n="compCard">Property Comparison</span></h3>
+            <button class="btn-outline" onclick="goTab('explore')" data-i18n="pickMore">+ Pick Homes</button>
+          </div>
+          <div style="overflow-x:auto;" id="compareBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 4: MARKETPLACE (COMPLETE P2P BUY/SELL + INBOX) -->
+    <section id="market" class="section">
+      <div class="sec-head">
+        <div>
+          <h2 data-i18n="mktTitle">Dhaka P2P Marketplace & Moving Sales</h2>
+          <p data-i18n="mktSub">Browse used items, send buy requests, negotiate directly in P2P Inbox, or manage your own listings.</p>
+        </div>
+        <button class="btn" onclick="openModal('sellModal')">+ <span data-i18n="btnSell">Sell / Moving Sale</span></button>
+      </div>
+
+      <!-- Marketplace Sub-Navigation -->
+      <div class="mkt-tabs">
+        <button id="mktTabBrowse" class="mkt-tab active" onclick="switchMktView('browse')">🛍️ <span data-i18n="mktBrowse">Browse Items</span></button>
+        <button id="mktTabInbox" class="mkt-tab" onclick="switchMktView('inbox')">💬 <span data-i18n="mktInbox">P2P Inbox & Requests</span> <span class="notif-dot" id="inboxCount">2</span></button>
+        <button id="mktTabMine" class="mkt-tab" onclick="switchMktView('mine')">📦 <span data-i18n="mktMine">My Listings</span></button>
+      </div>
+
+      <!-- View A: Browse Items -->
+      <div id="mktViewBrowse">
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;">
+          <input id="mSearch" type="text" data-i18n-ph="mktPh" placeholder="🔍 Search bed, fridge, sofa, table..." oninput="renderMarket()" style="flex:1; min-width:220px; padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text);">
+          <select id="mFilter" onchange="renderMarket()" style="padding:10px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface); color:var(--text);">
+            <option value="all" data-i18n="mktAll">All Regions & Types</option>
+            <option value="moving-sale" data-i18n="mktBundle">📦 Moving Sale Bundles</option>
+            <option value="DIU & Ashulia">🎓 DIU & Ashulia Zone</option>
+            <option value="North Dhaka">🏙️ North Dhaka (Uttara / Bashundhara)</option>
+            <option value="West & Central">🚇 West & Central (Mirpur / Dhanmondi)</option>
+            <option value="East & South">🌆 East & South (Aftabnagar / Khilgaon)</option>
+          </select>
+        </div>
+        <div id="marketGrid" class="grid-3"></div>
+      </div>
+
+      <!-- View B: P2P Inbox & Requests -->
+      <div id="mktViewInbox" style="display:none;">
+        <div class="inbox-layout">
+          <div class="inbox-sidebar" id="inboxThreads"></div>
+          <div class="chat-pane" id="chatPane"></div>
+        </div>
+      </div>
+
+      <!-- View C: My Listings -->
+      <div id="mktViewMine" style="display:none;">
+        <div id="myListingsGrid" class="grid-3"></div>
+      </div>
+    </section>
+
+    <!-- TAB 5: MOVING CENTER -->
+    <section id="moving" class="section">
+      <div class="sec-head">
+        <div>
+          <h2 data-i18n="mvTitle">Moving Center & Checklists</h2>
+          <p data-i18n="mvSub">Book verified movers across Dhaka City & Ashulia, track status live, and use checklists.</p>
+        </div>
+      </div>
+      <div class="grid-2">
+        <div class="card">
+          <h3>🚚 <span data-i18n="bookMover">Book a Moving Service</span></h3>
+          <div class="form-grid">
+            <div class="field"><label data-i18n="lblFrom">Pickup Address</label><input id="mvFrom" placeholder="e.g., Mirpur 10 / Khagan"></div>
+            <div class="field"><label data-i18n="lblTo">Destination</label><input id="mvTo" placeholder="e.g., Uttara Sector 11 / Dattapara"></div>
+          </div>
+          <div id="moversBox" style="display:flex; flex-direction:column; gap:10px;"></div>
+          <div class="ai-card">
+            <div class="ai-header">📍 <span data-i18n="liveTrack">Live Moving Status Tracker</span></div>
+            <div id="trackerBox" style="font-size:0.86rem; color:var(--text-secondary);" data-i18n="noBook">Book any mover above to track status.</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <h3>✅ <span data-i18n="chkTitle">Checklists</span></h3>
+            <div style="display:flex; gap:6px;">
+              <button id="tabPre" class="btn" style="padding:6px 11px; font-size:0.8rem;" onclick="setChecklist('pre')" data-i18n="preMove">Pre-Moving</button>
+              <button id="tabPost" class="btn-outline" style="padding:6px 11px; font-size:0.8rem;" onclick="setChecklist('post')" data-i18n="postMove">Post Move-in</button>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.8rem; font-weight:700; color:var(--text-secondary);">
+              <span data-i18n="progress">Progress</span><span id="checkPct">0%</span>
+            </div>
+            <div class="progress-track"><div class="progress-fill" id="checkBar" style="width:0%;"></div></div>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <input id="newTask" type="text" data-i18n-ph="taskPh" placeholder="Add a custom task..." style="flex:1; padding:9px 12px; border:1px solid var(--border); border-radius:10px; background:var(--surface-alt); color:var(--text);">
+            <button class="btn" onclick="addCheckTask()" data-i18n="btnAdd">Add</button>
+          </div>
+          <div id="checkListBox"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 6: ROLE-BASED PORTAL -->
+    <section id="portal" class="section">
+      <div class="sec-head">
+        <div>
+          <h2 data-i18n="portalTitle">Role-Based Portal (Landlord & Admin)</h2>
+          <p data-i18n="portalSub">Permissions change automatically based on your logged-in role.</p>
+        </div>
+        <button class="btn-soft" onclick="openModal('profileModal')" data-i18n="switchAcc">🔄 Switch Account / Logout</button>
+      </div>
+      <div id="portalBody"></div>
+    </section>
+  </main>
+  <footer class="app-footer">
+    <span class="footer-brand"><svg class="brand-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RentSafe+ Logo">
+        <defs>
+          <linearGradient id="rsBgGrad" x1="4" y1="4" x2="44" y2="44" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#14b8a6"/>
+            <stop offset="55%" stop-color="#0f766e"/>
+            <stop offset="100%" stop-color="#0f172a"/>
+          </linearGradient>
+          <linearGradient id="rsGoldGrad" x1="20" y1="18" x2="32" y2="34" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#fde047"/>
+            <stop offset="100%" stop-color="#f59e0b"/>
+          </linearGradient>
+        </defs>
+        <rect x="2" y="2" width="44" height="44" rx="13" fill="url(#rsBgGrad)"/>
+        <rect x="2.75" y="2.75" width="42.5" height="42.5" rx="12.25" stroke="rgba(255,255,255,0.22)" stroke-width="1.5"/>
+        <!-- Geometric Shield + House Roof Mark -->
+        <path d="M24 10L12 18.2V26.5C12 33.4 17.2 38.4 24 40C30.8 38.4 36 33.4 36 26.5V18.2L24 10Z" fill="rgba(255,255,255,0.14)" stroke="#ffffff" stroke-width="2.4" stroke-linejoin="round"/>
+        <!-- Bold Roof Accent -->
+        <path d="M10.5 19.2L24 9.8L37.5 19.2" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- Iconic Plus (+) / Spark Emblem in Gold -->
+        <path d="M24 19.5V31.5M18 25.5H30" stroke="url(#rsGoldGrad)" stroke-width="3.2" stroke-linecap="round"/>
+      </svg><strong>RentSafe+</strong></span> • © 2026 — <span data-i18n="creditText">Concept & Interactive Prototype by</span> <strong>Md Abdullah Al Noman</strong>. <span data-i18n="rightsText">All Rights Reserved.</span>
+  </footer>
+</div>
+
+<!-- MODALS -->
+<div class="modal-bg" id="profileModal">
+  <div class="modal" style="max-width:420px;">
+    <button class="close-btn" onclick="closeModal('profileModal')">✕</button>
+    <h3 style="margin-bottom:14px;" data-i18n="profTitle">👤 Active Account</h3>
+    <div class="ai-card" style="margin-bottom:14px;">
+      <div class="ai-header" id="profRole">Role</div>
+      <h3 id="profName" style="margin-bottom:2px;">Name</h3>
+      <div id="profEmail" style="font-size:0.84rem; color:var(--muted);">email@gmail.com</div>
+    </div>
+    <p style="font-size:0.82rem; color:var(--muted); margin-bottom:14px;" data-i18n="logoutHint">Logging out will return you to the full-screen Login page where you can test another role.</p>
+    <div style="display:flex; gap:10px;">
+      <button class="btn-danger" style="flex:1; padding:10px;" onclick="logoutUser()" data-i18n="btnLogout">🚪 Logout & Switch</button>
+      <button class="btn-outline" style="flex:1;" onclick="closeModal('profileModal')" data-i18n="btnClose">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-bg" id="detailModal"><div class="modal"><button class="close-btn" onclick="closeModal('detailModal')">✕</button><div id="detailBody"></div></div></div>
+
+<div class="modal-bg" id="reviewModal">
+  <div class="modal" style="max-width:440px;">
+    <button class="close-btn" onclick="closeModal('reviewModal')">✕</button>
+    <h3 style="margin-bottom:12px;" data-i18n="btnWriteRev">Write a Review</h3>
+    <div class="field" style="margin-bottom:10px;"><label data-i18n="lblName">Your Name</label><input id="rAuthor" placeholder="Resident Name"></div>
+    <div class="field" style="margin-bottom:10px;"><label>Status</label>
+      <select id="rVer"><option value="true">✅ Verified Resident</option><option value="false">⚠️ Unverified User</option></select>
+    </div>
+    <div class="field" style="margin-bottom:14px;"><label>Review</label><textarea id="rText" rows="3" placeholder="Share honest local feedback..."></textarea></div>
+    <button class="btn" style="width:100%;" onclick="submitReview()" data-i18n="btnSubmit">Submit</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="sellModal">
+  <div class="modal" style="max-width:460px;">
+    <button class="close-btn" onclick="closeModal('sellModal')">✕</button>
+    <h3 style="margin-bottom:12px;" data-i18n="btnSell">Sell / Moving Sale</h3>
+    <div class="field" style="margin-bottom:10px;"><label>Title / পণ্যের নাম</label><input id="mTitle" placeholder="Moving Sale: Bed + Reading Table"></div>
+    <div class="form-grid" style="margin-bottom:10px;">
+      <div class="field"><label>Price (৳)</label><input type="number" id="mPrice" placeholder="6500"></div>
+      <div class="field"><label>Area</label>
+        <select id="mArea">
+          <option value="Uttara|North Dhaka">Uttara (North Dhaka)</option>
+          <option value="Bashundhara R/A|North Dhaka">Bashundhara R/A (North Dhaka)</option>
+          <option value="Mirpur 10|West & Central">Mirpur 10 (West & Central)</option>
+          <option value="Dhanmondi|West & Central">Dhanmondi (West & Central)</option>
+          <option value="Aftabnagar|East & South">Aftabnagar (East & South)</option>
+          <option value="Dattapara|DIU & Ashulia">Dattapara (DIU & Ashulia)</option>
+          <option value="Ashulia Model Town|DIU & Ashulia">Ashulia Model Town (DIU & Ashulia)</option>
+        </select>
+      </div>
+    </div>
+    <div class="field" style="margin-bottom:10px;"><label>Type</label>
+      <select id="mType"><option value="moving-sale">📦 Moving Sale Bundle</option><option value="single">🛋️ Single Used Item</option></select>
+    </div>
+    <div class="field" style="margin-bottom:10px;">
+      <label>📝 Post Details / পণ্যের বিবরণ</label>
+      <textarea id="mDesc" rows="2" placeholder="কতদিন ব্যবহার করা হয়েছে, কোনো সমস্যা আছে কিনা এবং কোথা থেকে নিতে হবে লিখুন..."></textarea>
+    </div>
+    <div class="field" style="margin-bottom:14px;">
+      <label>📷 Upload Photo / ছবি আপলোড (Optional)</label>
+      <div class="upload-box" onclick="document.getElementById('mPhotoInp').click()">
+        <div style="font-size:0.8rem; color:var(--muted);">Click to choose photo from device</div>
+        <input id="mPhotoInp" type="file" accept="image/*" style="display:none;" onchange="handlePhotoPick(event, 'market')">
+        <div class="upload-preview" id="mPhotoPrev"></div>
+      </div>
+    </div>
+    <button class="btn" style="width:100%;" onclick="addMarket()" data-i18n="btnPublish">Publish</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  // --- 1. DUAL LANGUAGE DICTIONARY ---
+  const i18n = {
+    en: {
+      brandSub: "Greater Dhaka & DIU Smart City",
+      gateTitle: "Know Every Dhaka Neighborhood Before You Sign a Lease.",
+      gateDesc: "Region-wise rental intelligence across North Dhaka, West & Central Dhaka, East & South Dhaka, and DIU Smart City (Ashulia) — with AI-analyzed area reports.",
+      hl1: "4 Dhaka Regions: Uttara, Mirpur, Dhanmondi, Bashundhara, Badda & DIU Ashulia",
+      hl2: "Accurate AI Area Analysis: Utilities, Gas Type, Metro Access & Flood Risk",
+      hl3: "True Monthly Cost Calculator & Side-by-Side Flat Comparison",
+      hl4: "Used Furniture Marketplace, Moving Sales & Verified Movers",
+      authHead: "🔐 Sign in to RentSafe+", tabLogin: "Login", tabReg: "Register",
+      lblEmail: "Gmail / Email", lblPass: "Password", lblName: "Full Name", lblRole: "Account Type",
+      btnLoginNow: "Login to App →", btnCreateAcc: "Create Account & Enter →",
+      demoCredTitle: "⚡ Demo Accounts (Click to Auto-Fill):",
+      demoBadge: "GREATER DHAKA + DIU",
+      demoText: "Region-wise coverage: North Dhaka, West & Central Dhaka, East & South Dhaka, and DIU Ashulia.",
+      navHomes: "Homes", navArea: "Area Reality", navCalc: "Cost & Compare", navMarket: "Marketplace", navMoving: "Moving", navPortal: "Portal",
+      heroTitle: "Rent Smarter Across All of Dhaka & DIU Ashulia.",
+      heroDesc: "Browse region-wise verified flats with realistic utility info (Titas gas vs cylinder, Metro Rail access, WASA water, monsoon drainage) before moving in.",
+      tileArea: "AI Area Reality", tileAreaSub: "Accurate local analysis",
+      tileCost: "True Cost", tileCostSub: "Rent + hidden charges",
+      tileMarket: "Moving Sales", tileMarketSub: "Used items by region",
+      tileMove: "Mover Tracking", tileMoveSub: "Dhaka & Ashulia vans",
+      searchPh: "🔍 Search Uttara, Mirpur, Dhanmondi, Bashundhara, Aftabnagar, Dattapara...",
+      anyRent: "💰 Any Monthly Rent", allList: "✨ All Listings", favList: "❤️ Saved Favourites", safeList: "✅ Low Flood Risk Only",
+      btnMap: "Dhaka Map", mapHint: "🗺️ Greater Dhaka & DIU Ashulia Map — Click any pin to inspect flat & true cost",
+      homesSub: "Region tag, base rent, true monthly cost, and flood risk on every card.", btnCompare: "Compare",
+      areaTitle: "AI Area Reality Report & Resident Q&A", areaSub: "Select a Dhaka region, then pick an area for accurate utility, transit, flood & fair-rent analysis.",
+      aiSumTitle: "AI Ground-Reality Analysis", aiRentLbl: "Fair Rent Benchmark", aiGasLbl: "Gas & Power Reality", aiTransLbl: "Transit & Commute", aiWarnLbl: "Key Watch-out",
+      qaTitle: "Ask a Local Resident", qaPh: "Ask about WASA water, Metro access, gas...", btnAsk: "Ask",
+      revTitle: "Resident Reviews (Verified vs Unverified)", btnWriteRev: "Write a Review",
+      verRevHead: "✅ VERIFIED RESIDENT REPORTS", unverRevHead: "⚠️ UNVERIFIED USER REPORTS",
+      calcTitle: "True Monthly Cost & Comparison", calcSub: "Compare actual monthly living expenses across different Dhaka regions.",
+      calcCard: "True Monthly Cost Calculator", totalMo: "TOTAL/MO",
+      lblRent: "Base Rent (৳)", lblServ: "Service Charge (৳)", lblGas: "Gas / Cylinder (৳)", lblWater: "Water & Waste (৳)", lblPark: "Parking / Garage (৳)", lblOther: "Broadband / Other (৳)",
+      compCard: "Property Comparison", pickMore: "+ Pick Homes",
+      mktTitle: "Dhaka Marketplace & Moving Sales", mktSub: "Find second-hand furniture near your new home across all Dhaka regions.",
+      mktPh: "🔍 Search bed, fridge, sofa, table...", mktAll: "All Regions & Types", mktBundle: "📦 Moving Sale Bundles", btnSell: "Sell / Moving Sale", mktBrowse: "Browse Items", mktInbox: "P2P Inbox & Requests", mktMine: "My Listings",
+      mvTitle: "Moving Center & Checklists", mvSub: "Book verified movers across Dhaka City & Ashulia, track status live, and use checklists.",
+      bookMover: "Book a Moving Service", lblFrom: "Pickup Address", lblTo: "Destination", liveTrack: "Live Moving Status Tracker",
+      noBook: "Book any mover above to track status.", chkTitle: "Checklists", preMove: "Pre-Moving", postMove: "Post Move-in",
+      progress: "Progress", taskPh: "Add a custom task...", btnAdd: "Add",
+      portalTitle: "Role-Based Portal (Landlord & Admin)", portalSub: "Permissions change automatically based on your logged-in role.",
+      switchAcc: "🔄 Switch Account / Logout", profTitle: "👤 Active Account",
+      logoutHint: "Logging out will return you to the full-screen Login page where you can test another role.",
+      btnLogout: "🚪 Logout & Switch", btnClose: "Close", btnSubmit: "Submit", btnPublish: "Publish", creditText: "Concept & Interactive Prototype by", rightsText: "All Rights Reserved."
+    },
+    bn: {
+      brandSub: "সমগ্র ঢাকা ও DIU স্মার্ট সিটি",
+      gateTitle: "বাসা ভাড়া নেওয়ার আগেই জানুন ঢাকার প্রতিটি এলাকার আসল অবস্থা।",
+      gateDesc: "উত্তর ঢাকা, পশ্চিম ও মধ্য ঢাকা, পূর্ব ও দক্ষিণ ঢাকা এবং DIU আশুলিয়া—অঞ্চলভিত্তিক বাসা ও এআই (AI) বিশ্লেষিত এলাকার রিপোর্ট।",
+      hl1: "৪টি অঞ্চল: উত্তরা, মিরপুর, ধানমন্ডি, বসুন্ধরা, বাড্ডা এবং DIU আশুলিয়া",
+      hl2: "সঠিক AI বিশ্লেষণ: গ্যাস (তিতাস/সিলিন্ডার), মেট্রোরেল, পানি ও জলাবদ্ধতা",
+      hl3: "প্রকৃত মাসিক খরচ ক্যালকুলেটর ও পাশাপাশি বাসার তুলনা",
+      hl4: "পুরানো ফার্নিচার মার্কেটপ্লেস, মুভিং সেল ও বিশ্বস্ত মুভার্স",
+      authHead: "🔐 RentSafe+ এ লগইন করুন", tabLogin: "লগইন", tabReg: "রেজিস্টার",
+      lblEmail: "জিমেইল / ইমেইল", lblPass: "পাসওয়ার্ড", lblName: "পূর্ণ নাম", lblRole: "অ্যাকাউন্টের ধরন",
+      btnLoginNow: "অ্যাপে প্রবেশ করুন →", btnCreateAcc: "অ্যাকাউন্ট তৈরি ও প্রবেশ →",
+      demoCredTitle: "⚡ ডেমো অ্যাকাউন্ট (ক্লিক করে অটো-ফিল করুন):",
+      demoBadge: "সমগ্র ঢাকা + DIU",
+      demoText: "অঞ্চলভিত্তিক কভারেজ: উত্তর ঢাকা, পশ্চিম ও মধ্য ঢাকা, পূর্ব ও দক্ষিণ ঢাকা এবং DIU আশুলিয়া।",
+      navHomes: "বাসা খুঁজুন", navArea: "এলাকার তথ্য", navCalc: "খরচ ও তুলনা", navMarket: "মার্কেটপ্লেস", navMoving: "শিফটিং", navPortal: "পোর্টাল",
+      heroTitle: "সমগ্র ঢাকা ও DIU আশুলিয়ায় স্মার্টভাবে বাসা ভাড়া নিন।",
+      heroDesc: "অঞ্চলভিত্তিক ভেরিফায়েড ফ্ল্যাট দেখুন—তিতাস গ্যাস নাকি সিলিন্ডার, মেট্রোরেল সুবিধা, ওয়াসা পানি ও বর্ষায় জলাবদ্ধতার সঠিক তথ্যসহ।",
+      tileArea: "AI এলাকার তথ্য", tileAreaSub: "নিখুঁত স্থানীয় বিশ্লেষণ",
+      tileCost: "আসল মাসিক খরচ", tileCostSub: "ভাড়া + অন্যান্য চার্জ",
+      tileMarket: "মুভিং সেল", tileMarketSub: "অঞ্চলভিত্তিক ফার্নিচার",
+      tileMove: "মুভার্স ট্র্যাকিং", tileMoveSub: "ঢাকা ও আশুলিয়া পিকআপ",
+      searchPh: "🔍 উত্তরা, মিরপুর, ধানমন্ডি, বসুন্ধরা, আফতাবনগর, দত্তপাড়া খুঁজুন...",
+      anyRent: "💰 যেকোনো ভাড়া", allList: "✨ সব বাসা", favList: "❤️ সেভ করা বাসা", safeList: "✅ জলাবদ্ধতামুক্ত",
+      btnMap: "ঢাকা ম্যাপ", mapHint: "🗺️ সমগ্র ঢাকা ও DIU আশুলিয়া ম্যাপ — বিস্তারিত দেখতে পিনে ক্লিক করুন",
+      homesSub: "প্রতিটি কার্ডে অঞ্চল, মূল ভাড়া, আনুমানিক মোট খরচ এবং জলাবদ্ধতার ঝুঁকি দেখানো হয়েছে।", btnCompare: "তুলনা করুন",
+      areaTitle: "AI এলাকার বাস্তব রিপোর্ট ও প্রশ্নোত্তর", areaSub: "প্রথমে ঢাকার অঞ্চল বাছাই করুন, তারপর এলাকার সঠিক গ্যাস, পানি, যাতায়াত ও ন্যায্য ভাড়ার বিশ্লেষণ দেখুন।",
+      aiSumTitle: "AI (এআই) বাস্তবতা বিশ্লেষণ", aiRentLbl: "ন্যায্য ভাড়ার রেঞ্জ", aiGasLbl: "গ্যাস ও বিদ্যুৎ অবস্থা", aiTransLbl: "যাতায়াত ও মেট্রো", aiWarnLbl: "সতর্কতা / দুর্বলতা",
+      qaTitle: "স্থানীয় বাসিন্দাকে প্রশ্ন করুন", qaPh: "ওয়াসা পানি, মেট্রোরেল বা গ্যাস নিয়ে প্রশ্ন করুন...", btnAsk: "প্রশ্ন করুন",
+      revTitle: "বাসিন্দাদের রিভিউ (ভেরিফায়েড বনাম আনভেরিফায়েড)", btnWriteRev: "রিভিউ লিখুন",
+      verRevHead: "✅ ভেরিফায়েড বাসিন্দাদের রিপোর্ট", unverRevHead: "⚠️ আনভেরিফায়েড ইউজার রিপোর্ট",
+      calcTitle: "প্রকৃত মাসিক খরচ ও বাসার তুলনা", calcSub: "ঢাকার বিভিন্ন অঞ্চলের প্রকৃত মাসিক খরচ হিসাব ও তুলনা করুন।",
+      calcCard: "প্রকৃত মাসিক খরচ ক্যালকুলেটর", totalMo: "মোট/মাস",
+      lblRent: "মূল ভাড়া (৳)", lblServ: "সার্ভিস চার্জ (৳)", lblGas: "গ্যাস / সিলিন্ডার (৳)", lblWater: "পানি ও ময়লা (৳)", lblPark: "পার্কিং / গ্যারেজ (৳)", lblOther: "ব্রডব্যান্ড / অন্যান্য (৳)",
+      compCard: "বাসার তুলনা", pickMore: "+ আরও বাসা বাছাই",
+      mktTitle: "ঢাকা মার্কেটপ্লেস ও মুভিং সেল", mktSub: "ঢাকার সব অঞ্চলে নতুন বাসার আশেপাশে কম দামে ফার্নিচার কিনুন বা বিক্রি করুন।",
+      mktPh: "🔍 খাট, ফ্রিজ, সোফা, টেবিল খুঁজুন...", mktAll: "সব অঞ্চল ও পণ্য", mktBundle: "📦 মুভিং সেল বান্ডেল", btnSell: "বিক্রি / মুভিং সেল", mktBrowse: "পণ্য দেখুন", mktInbox: "P2P ইনবক্স ও রিকোয়েস্ট", mktMine: "আমার পোস্ট",
+      mvTitle: "মুভিং সেন্টার ও চেকলিস্ট", mvSub: "ঢাকা ও আশুলিয়ায় বিশ্বস্ত মুভার্স বুক করুন, লাইভ ট্র্যাকিং দেখুন ও চেকলিস্ট ব্যবহার করুন।",
+      bookMover: "মুভিং সার্ভিস বুক করুন", lblFrom: "পিকআপ ঠিকানা", lblTo: "গন্তব্য ঠিকানা", liveTrack: "লাইভ মুভিং স্ট্যাটাস ট্র্যাকার",
+      noBook: "লাইভ স্ট্যাটাস দেখতে উপরের যেকোনো মুভার্স বুক করুন।", chkTitle: "চেকলিস্ট", preMove: "ওঠার আগে", postMove: "ওঠার পরে",
+      progress: "অগ্রগতি", taskPh: "নতুন কাজ যোগ করুন...", btnAdd: "যোগ করুন",
+      portalTitle: "রোল-ভিত্তিক পোর্টাল (বাড়িওয়ালা ও অ্যাডমিন)", portalSub: "আপনার লগইন রোল অনুযায়ী অ্যাক্সেস অটোমেটিক পরিবর্তন হবে।",
+      switchAcc: "🔄 অ্যাকাউন্ট পরিবর্তন / লগআউট", profTitle: "👤 বর্তমান অ্যাকাউন্ট",
+      logoutHint: "লগআউট করলে আপনি আবার ফুল-স্ক্রিন লগইন পেজে ফিরে যাবেন এবং অন্য রোলে লগইন করতে পারবেন।",
+      btnLogout: "🚪 লগআউট ও পরিবর্তন", btnClose: "বন্ধ করুন", btnSubmit: "জমা দিন", btnPublish: "পাবলিশ করুন", creditText: "আইডিয়া ও ইন্টারেক্টিভ প্রোটোটাইপ:", rightsText: "সর্বস্বত্ব সংরক্ষিত।"
+    }
+  };
+
+  let lang = localStorage.getItem("rs_v5_lang") || "en";
+  let theme = localStorage.getItem("rs_v5_theme") || "light";
+
+  // --- 2. DEMO USERS ---
+  const defaultUsers = [
+    { name: "Tahmid Hasan", email: "student@gmail.com", pass: "123456", role: "Tenant" },
+    { name: "Kamal Hossain", email: "landlord@gmail.com", pass: "123456", role: "Landlord" },
+    { name: "Admin Noman", email: "admin@gmail.com", pass: "admin123", role: "Admin" }
+  ];
+  let users = JSON.parse(localStorage.getItem("rs_v5_users") || "null") || defaultUsers;
+  let currentUser = JSON.parse(localStorage.getItem("rs_v5_current_user") || "null");
+
+  // --- 3. REGION DEFINITIONS ---
+  const regions = [
+    { id: "All", en: "All Dhaka", bn: "সমগ্র ঢাকা" },
+    { id: "North Dhaka", en: "North Dhaka", bn: "উত্তর ঢাকা" },
+    { id: "West & Central", en: "West & Central", bn: "পশ্চিম ও মধ্য ঢাকা" },
+    { id: "East & South", en: "East & South", bn: "পূর্ব ও দক্ষিণ ঢাকা" },
+    { id: "DIU & Ashulia", en: "DIU & Ashulia", bn: "DIU ও আশুলিয়া" }
+  ];
+
+  // --- 4. ACCURATE, ANALYZED AREA INTELLIGENCE ---
+  const areaDB = {
+    // NORTH DHAKA
+    "Uttara (Sector 10-13)": {
+      region: "North Dhaka", water: 91, power: 90, net: 94, trans: 90, quiet: 86, flood: "Low Risk",
+      bestFor: "Families, Airport/Metro Commuters",
+      rentRange: "2-Bed: ৳16k–22k | 3-Bed: ৳24k–35k",
+      gasPower: "Prepaid Titas Gas (most older buildings) or Cylinder in new flats; DESCO power is stable.",
+      transit: "Direct MRT-6 Metro Rail (Uttara North/Center/South) — 28 mins to Motijheel.",
+      watchout: "Severe peak-hour traffic at House Building & Airport Road; Sector 10/11 outer lanes can get dusty.",
+      ai: "Uttara Sectors 10–13 offer planned grid roads, reliable DESCO electricity, and strong WASA supply. MRT-6 Metro Rail has dramatically improved commuting to central Dhaka."
+    },
+    "Bashundhara R/A": {
+      region: "North Dhaka", water: 95, power: 94, net: 93, trans: 76, quiet: 94, flood: "Low Risk",
+      bestFor: "NSU/IUB Students & Security-Focused Families",
+      rentRange: "2-Bed: ৳18k–26k | 3-Bed: ৳28k–45k",
+      gasPower: "Primarily LP Cylinder / Central LPG; very high DESCO reliability + building generators.",
+      transit: "Easy Kuril/300ft access, but deeper blocks (G–N) rely on rickshaws or ride-sharing.",
+      watchout: "Higher service charges (৳3,500–6,000/mo) and ongoing construction dust in newer blocks.",
+      ai: "One of Dhaka's safest and cleanest gated residential zones with minimal flood risk. Ideal for NSU/IUB students and corporate families, though internal transport costs add up."
+    },
+    // WEST & CENTRAL DHAKA
+    "Mirpur (10 / 12 / Pallabi)": {
+      region: "West & Central", water: 76, power: 82, net: 91, trans: 96, quiet: 58, flood: "High Risk",
+      bestFor: "Budget Families & Daily Metro Commuters",
+      rentRange: "2-Bed: ৳12k–17k | 3-Bed: ৳18k–25k",
+      gasPower: "Mix of Titas line gas (low pressure 9 AM–1 PM) & LP cylinder; DESCO power mostly stable.",
+      transit: "Top-tier MRT-6 Metro Rail stations (Mirpur 10, 11, Pallabi, Kazipara) cut commute time by 60%.",
+      watchout: "Heavy monsoon waterlogging on inner lanes (Mirpur 10, Kazipara, Shewrapara) and high street noise.",
+      ai: "Unbeatable value for money thanks to Metro Rail and affordable local markets. Always inspect ground-floor drainage and morning gas pressure before signing a lease."
+    },
+    "Dhanmondi (15 / 27 / Jigatola)": {
+      region: "West & Central", water: 86, power: 91, net: 95, trans: 88, quiet: 72, flood: "Medium Risk",
+      bestFor: "Professionals, Medical/University Access",
+      rentRange: "2-Bed: ৳20k–28k | 3-Bed: ৳32k–50k",
+      gasPower: "Titas prepaid/line gas in older flats, LP cylinder in newer ones; strong DPDC power.",
+      transit: "Central access to New Market, Farmgate, Green Road & major hospitals/universities.",
+      watchout: "Heavy Satmasjid Road traffic, high service charges, and temporary waterlogging near Rd 27/Shankar after heavy rain.",
+      ai: "Prime central Dhaka lifestyle with top hospitals, schools, and cafes within walking distance. Rent and service charges sit in the upper tier, with occasional monsoon pooling."
+    },
+    "Mohammadpur (Tajmahal / Bosila)": {
+      region: "West & Central", water: 80, power: 84, net: 90, trans: 82, quiet: 66, flood: "Medium Risk",
+      bestFor: "Mid-Budget Families & Young Professionals",
+      rentRange: "2-Bed: ৳13k–19k | 3-Bed: ৳20k–30k",
+      gasPower: "Tajmahal/Iqbal Rd has Titas gas (low noon pressure); Bosila is mostly LP cylinder.",
+      transit: "Good bus/CNG links to Dhanmondi & Gabtoli; Bosila bridge faces rush-hour bottlenecks.",
+      watchout: "Verify security on quieter Bosila lanes at night and check rainy-season drainage in low-lying pockets.",
+      ai: "Strong community vibe with famous food streets and affordable markets. Tajmahal/Noorjahan Road is well-established, while Bosila offers newer budget flats with slightly longer commutes."
+    },
+    // EAST & SOUTH DHAKA
+    "Aftabnagar / Badda": {
+      region: "East & South", water: 88, power: 87, net: 91, trans: 80, quiet: 86, flood: "Low Risk",
+      bestFor: "EWU / BRACU Students & Modern Families",
+      rentRange: "2-Bed: ৳15k–22k | 3-Bed: ৳24k–34k",
+      gasPower: "Aftabnagar uses LP cylinder/central gas with stable DESCO power and building generators.",
+      transit: "Direct access to Rampura Bridge & Hatirjheel; Progoti Sarani experiences heavy peak-hour jams.",
+      watchout: "Middle Badda & Progoti Sarani face severe rain waterlogging, whereas Aftabnagar planned blocks stay mostly dry.",
+      ai: "Aftabnagar provides clean, planned blocks ideal for East West & BRAC University students. Avoid main-road Badda ground floors due to monsoon drainage issues."
+    },
+    "Khilgaon / Rampura": {
+      region: "East & South", water: 81, power: 85, net: 90, trans: 85, quiet: 70, flood: "Medium Risk",
+      bestFor: "Motijheel Office Workers & Families",
+      rentRange: "2-Bed: ৳14k–19k | 3-Bed: ৳21k–29k",
+      gasPower: "Titas line gas common in older blocks (weak daytime pressure); DPDC electricity is steady.",
+      transit: "Quick access to Motijheel, Malibagh & Hatirjheel water-taxi/bus routes.",
+      watchout: "Low-lying pockets in South Banasree & Rampura lanes hold rainwater for a few hours after downpours.",
+      ai: "Well-connected residential belt with vibrant food hubs (Taltola/Khilgaon) and easy commutes to Motijheel. Check street elevation for monsoon drainage."
+    },
+    // DIU & ASHULIA
+    "Dattapara (DIU Gate)": {
+      region: "DIU & Ashulia", water: 87, power: 83, net: 91, trans: 94, quiet: 76, flood: "Low Risk",
+      bestFor: "DIU Students (Walkable to Campus)",
+      rentRange: "Seat: ৳3.5k–5k | 2-Bed: ৳9k–12.5k",
+      gasPower: "Mostly LP Cylinder gas; BREB/Palli Bidyut power (occasional summer load-shedding—check IPS/generator).",
+      transit: "5–8 min walk to DIU Smart City main gate; frequent autos to Birulia & Savar.",
+      watchout: "Demand spikes right before each semester; confirm broadband ISP speed and backup power before booking.",
+      ai: "The #1 student hub right beside Daffodil International University. Abundant student dining, print shops, and fiber broadband, with very low flood risk."
+    },
+    "Ashulia Model Town": {
+      region: "DIU & Ashulia", water: 94, power: 89, net: 90, trans: 84, quiet: 95, flood: "Low Risk",
+      bestFor: "DIU Faculty, Families & Quiet Study",
+      rentRange: "2-Bed: ৳11k–15k | 3-Bed: ৳15k–21k",
+      gasPower: "LP Cylinder gas; newer buildings include generators or IPS lines for uninterrupted study.",
+      transit: "6–8 min auto ride to DIU Smart City; easy Birulia Bridge link toward Mirpur/Uttara.",
+      watchout: "Fewer late-night grocery shops inside deeper blocks compared to Khagan Bazar.",
+      ai: "Also known locally as Amin Model Town. Wide planned roads, zero waterlogging, and top-rated quietness—best for DIU students and families seeking a clean environment."
+    },
+    "Khagan Bazar / Changao": {
+      region: "DIU & Ashulia", water: 84, power: 81, net: 87, trans: 90, quiet: 74, flood: "Medium Risk",
+      bestFor: "Budget DIU Students & Mess Living",
+      rentRange: "Seat: ৳2.8k–4.2k | 2-Bed: ৳7.5k–10.5k",
+      gasPower: "LP Cylinder gas; submersible pump water is common—verify backup tank capacity.",
+      transit: "4–7 min walk/auto to DIU; Khagan Bazar has daily groceries, pharmacies, and budget hotels.",
+      watchout: "Khagan Bazar main road gets crowded and muddy after heavy rain; Changao inner lanes are quieter.",
+      ai: "Most economical zone near DIU Smart City. Khagan offers unbeatable daily convenience while neighboring Changao provides calmer streets for studying."
+    },
+    "Charabag / Akran": {
+      region: "DIU & Ashulia", water: 80, power: 80, net: 85, trans: 88, quiet: 72, flood: "High Risk",
+      bestFor: "Commuters to Savar, Birulia & DIU",
+      rentRange: "2-Bed: ৳7.5k–11k | 3-Bed: ৳12k–16k",
+      gasPower: "Mostly LP Cylinder; check Palli Bidyut voltage stability & IPS availability.",
+      transit: "Direct bus/auto access along Akran-Birulia & Ashulia roads toward Savar and Mirpur.",
+      watchout: "Charabag low-lying lanes experience waterlogging during heavy monsoon rains.",
+      ai: "Very budget-friendly rentals with strong bus/auto links toward both Savar and Mirpur via Birulia Bridge. Prioritize 2nd floor or higher in Charabag."
+    }
+  };
+
+  function buildingSVG(c1, c2, accent) {
+    return `<svg class="bg-art" viewBox="0 0 400 180" preserveAspectRatio="none">
+      <defs><linearGradient id="g${c1.replace('#','')}" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/></linearGradient></defs>
+      <rect width="400" height="180" fill="url(#g${c1.replace('#','')})"/>
+      <circle cx="330" cy="40" r="24" fill="${accent}" opacity="0.25"/>
+      <rect x="40" y="65" width="95" height="115" rx="6" fill="rgba(255,255,255,0.14)"/>
+      <rect x="150" y="40" width="115" height="140" rx="6" fill="rgba(255,255,255,0.2)"/>
+      <rect x="280" y="80" width="85" height="100" rx="6" fill="rgba(255,255,255,0.12)"/>
+      <g fill="rgba(255,255,255,0.45)">
+        <rect x="168" y="58" width="18" height="14" rx="2"/><rect x="198" y="58" width="18" height="14" rx="2"/><rect x="228" y="58" width="18" height="14" rx="2"/>
+        <rect x="168" y="84" width="18" height="14" rx="2"/><rect x="198" y="84" width="18" height="14" rx="2"/><rect x="228" y="84" width="18" height="14" rx="2"/>
+        <rect x="168" y="110" width="18" height="14" rx="2"/><rect x="198" y="110" width="18" height="14" rx="2"/><rect x="228" y="110" width="18" height="14" rx="2"/>
+      </g></svg>`;
+  }
+
+  let homes = [
+    // North Dhaka
+    { id: 1, title: "Sunlight 3-Bed Family Flat", area: "Uttara (Sector 10-13)", region: "North Dhaka", tag: "8 min to Metro", rent: 24500, service: 3000, rooms: "3 Bed • 3 Bath", landlord: "Kamal Hossain", fac: ["Lift", "Generator", "Prepaid Gas", "CCTV"], flood: "Low", score: 4.7, colors: ["#0f766e", "#115e59", "#fde047"], x: "48%", y: "18%", photo: null,
+      desc: "South-facing bright family flat on 5th floor with prepaid Titas gas & 24/7 generator. Only bike parking available (no car garage)." },
+    { id: 2, title: "Block-D Modern 3-Bed Residence", area: "Bashundhara R/A", region: "North Dhaka", tag: "Near NSU / IUB", rent: 29000, service: 4000, rooms: "3 Bed • 2 Balcony", landlord: "Shafiqur Rahman", fac: ["Gated Security", "Lift", "Full Backup", "Fiber Net"], flood: "Low", score: 4.8, colors: ["#065f46", "#059669", "#a7f3d0"], x: "72%", y: "28%", photo: null,
+      desc: "Peaceful gated apartment walking distance from NSU/IUB with full AC-supported generator. Uses LP cylinder gas." },
+    // West & Central
+    { id: 3, title: "Metro-Walk 2-Bed Smart Flat", area: "Mirpur (10 / 12 / Pallabi)", region: "West & Central", tag: "4 min to MRT-6", rent: 15000, service: 1800, rooms: "2 Bed • 2 Bath", landlord: "Mizanur Rahman", fac: ["Metro Access", "Titas Gas", "Submersible Water"], flood: "High", score: 4.0, colors: ["#1e3a8a", "#2563eb", "#93c5fd"], x: "38%", y: "44%", photo: null,
+      desc: "4 min walk to Mirpur 10 Metro station, Titas line gas included. Note: street outside gets waterlogged during heavy monsoon rain." },
+    { id: 4, title: "Lakeview 3-Bed Central Flat", area: "Dhanmondi (15 / 27 / Jigatola)", region: "West & Central", tag: "Prime Central", rent: 35000, service: 4500, rooms: "3 Bed • Parking", landlord: "Dr. Anisul Haque", fac: ["24/7 Guard", "Lift", "Generator", "Garage"], flood: "Medium", score: 4.6, colors: ["#4c1d95", "#6d28d9", "#f9a8d4"], x: "42%", y: "70%", photo: null,
+      desc: "Spacious central flat near Dhanmondi Lake with 1 car parking spot & 24/7 lift. Evening traffic on Satmasjid Rd can be busy." },
+    { id: 5, title: "Tajmahal Rd 2-Bed Family Flat", area: "Mohammadpur (Tajmahal / Bosila)", region: "West & Central", tag: "Central Market", rent: 17500, service: 2000, rooms: "2 Bed • 2 Bath", landlord: "Habibur Rahman", fac: ["Titas Gas", "Wi-Fi Ready", "Wide Road"], flood: "Medium", score: 4.3, colors: ["#0369a1", "#0284c7", "#bae6fd"], x: "30%", y: "62%", photo: null,
+      desc: "Clean 4th floor family flat (no lift) near Town Hall market with Titas gas and reliable WASA water." },
+    // East & South
+    { id: 6, title: "Block-C 3-Bed Student/Family Flat", area: "Aftabnagar / Badda", region: "East & South", tag: "Near EWU / BRACU", rent: 22000, service: 3000, rooms: "3 Bed • 2 Balcony", landlord: "Rezaul Karim", fac: ["Planned Block", "Lift", "Generator", "Security"], flood: "Low", score: 4.6, colors: ["#155e75", "#0891b2", "#a5f3fc"], x: "76%", y: "54%", photo: null,
+      desc: "Modern tiled flat in quiet planned block, 5 min walk to EWU. Zero waterlogging inside block; uses cylinder gas." },
+    { id: 7, title: "Taltola 2-Bed Commuter Flat", area: "Khilgaon / Rampura", region: "East & South", tag: "15 min Motijheel", rent: 16500, service: 1800, rooms: "2 Bed • 2 Bath", landlord: "Saiful Islam", fac: ["Titas Gas", "Food Hub", "Roof Access"], flood: "Medium", score: 4.2, colors: ["#9a3412", "#ea580c", "#fed7aa"], x: "68%", y: "74%", photo: null,
+      desc: "Great for Motijheel commuters, Titas line gas available, rooftop access open. Morning gas pressure is slightly low." },
+    // DIU & Ashulia
+    { id: 8, title: "DIU Gate 2-Bed Bachelor Flat", area: "Dattapara (DIU Gate)", region: "DIU & Ashulia", tag: "5 min walk DIU", rent: 10500, service: 1000, rooms: "2 Bed • 2 Bath", landlord: "Kamal Hossain", fac: ["Fiber Wi-Fi", "CCTV", "24/7 Water", "Cylinder"], flood: "Low", score: 4.6, colors: ["#0f766e", "#0d9488", "#fde047"], x: "14%", y: "24%", photo: null,
+      desc: "Bachelor/student friendly flat 5 mins from DIU main gate with 30 Mbps Fiber Wi-Fi & 24/7 water. Main gate closes at 11:30 PM." },
+    { id: 9, title: "Planned 3-Bed Quiet Apartment", area: "Ashulia Model Town", region: "DIU & Ashulia", tag: "6 min auto DIU", rent: 15500, service: 1500, rooms: "3 Bed • 2 Balcony", landlord: "Mahmudul Hasan", fac: ["Wide Road", "Lift", "Generator", "Zero Flood"], flood: "Low", score: 4.8, colors: ["#065f46", "#10b981", "#d1fae5"], x: "22%", y: "36%", photo: null,
+      desc: "Calm, clean apartment in Amin/Ashulia Model Town with lift & generator backup. 10-taka auto ride to DIU gate." },
+    { id: 10, title: "Budget 2-Bed Student Flat", area: "Khagan Bazar / Changao", region: "DIU & Ashulia", tag: "4 min walk DIU", rent: 8500, service: 800, rooms: "2 Bed • 1 Bath", landlord: "Abdul Matin", fac: ["Near Bazar", "Wi-Fi", "Bike Parking"], flood: "Medium", score: 4.2, colors: ["#1e40af", "#3b82f6", "#bfdbfe"], x: "12%", y: "44%", photo: null,
+      desc: "Budget-friendly flat for 3-4 students right beside Khagan Bazar with bike parking. Bazar road gets muddy after heavy rain." }
+  ];
+
+  let reviews = [
+    { area: "Uttara (Sector 10-13)", author: "Tanvir Ahmed", ver: true, text: "Metro Rail from Uttara North completely changed my office commute. Water and DESCO power are super reliable." },
+    { area: "Mirpur (10 / 12 / Pallabi)", author: "Nusrat Jahan", ver: true, text: "Metro saves 2 hours daily, but inner lanes near Mirpur 10 still flood after heavy rain." },
+    { area: "Mirpur (10 / 12 / Pallabi)", author: "Guest Visitor", ver: false, text: "Rent is very reasonable compared to Dhanmondi or Banani." },
+    { area: "Dhanmondi (15 / 27 / Jigatola)", author: "Dr. Mahfuzur Rahman", ver: true, text: "Everything is close by, though service charges and Satmasjid Road traffic are high." },
+    { area: "Bashundhara R/A", author: "Farhan Karim", ver: true, text: "Very safe and peaceful for families. Just budget extra for rickshaws if you live in Block G or beyond." },
+    { area: "Aftabnagar / Badda", author: "Maliha Tabassum (EWU)", ver: true, text: "Clean planned blocks and walking distance to university. Much better drainage than main Badda road." },
+    { area: "Dattapara (DIU Gate)", author: "Sadia Afrin (DIU CSE)", ver: true, text: "5 mins walk to DIU gate! Stable local fiber internet and plenty of student food options." },
+    { area: "Ashulia Model Town", author: "Mehedi Hasan", ver: true, text: "Super clean roads and zero waterlogging. Best peaceful option near DIU Smart City." }
+  ];
+
+  let qas = [
+    { area: "Uttara (Sector 10-13)", q: "How long does Metro take from Uttara North to Farmgate?", a: "Around 20–22 minutes during regular hours—much faster than Airport Road buses." },
+    { area: "Mirpur (10 / 12 / Pallabi)", q: "How is Titas gas pressure in the morning?", a: "Usually slows down between 9 AM and 1 PM; most families keep an induction cooker as backup." },
+    { area: "Dattapara (DIU Gate)", q: "Is broadband good enough for online classes & gaming?", a: "Yes, local fiber ISPs give 20–30 Mbps stable speed with low ping." }
+  ];
+
+  let uploadedHomePhoto = null;
+  let uploadedMarketPhoto = null;
+
+  function handlePhotoPick(event, target) {
+    const file = event.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      if (target === "home") {
+        uploadedHomePhoto = e.target.result;
+        const p = document.getElementById("lPhotoPrev");
+        if (p) p.innerHTML = `<img src="${uploadedHomePhoto}">`;
+      } else {
+        uploadedMarketPhoto = e.target.result;
+        const p = document.getElementById("mPhotoPrev");
+        if (p) p.innerHTML = `<img src="${uploadedMarketPhoto}">`;
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  let market = [
+    { id: 1, title: "Moving Sale: Queen Bed + Wardrobe + Study Table", price: 18500, area: "Uttara Sector 11", region: "North Dhaka", type: "moving-sale", icon: "🛏️", bg: "#dbeafe", seller: "Tanvir Ahmed", sellerBadge: "Verified Resident", condition: "Used - Good", status: "Available", ownerEmail: "tanvir@gmail.com", photo: null, desc: "Used for 1.5 years, solid wood. Selling together because relocating next week." },
+    { id: 2, title: "Walton 213L Frost Refrigerator (Like New)", price: 14000, area: "Mirpur 10", region: "West & Central", type: "single", icon: "🧊", bg: "#dcfce7", seller: "Nusrat Jahan", sellerBadge: "Verified Resident", condition: "Like New", status: "Available", ownerEmail: "nusrat@gmail.com", photo: null, desc: "No repair history, cools fast. Pickup from Mirpur 10 Road 4." },
+    { id: 3, title: "DIU Senior Moving Sale: Single Bed + Desk + Chair", price: 5800, area: "Dattapara", region: "DIU & Ashulia", type: "moving-sale", icon: "📦", bg: "#fef3c7", seller: "Sadia Afrin (DIU CSE)", sellerBadge: "DIU Student", condition: "Used - Good", status: "Available", ownerEmail: "sadia@gmail.com", photo: null, desc: "Graduating this semester! Clean single bed + study table, pickup near DIU gate." },
+    { id: 4, title: "5-Seater Sofa Set + Center Table", price: 19500, area: "Aftabnagar", region: "East & South", type: "moving-sale", icon: "🛋️", bg: "#f3e8ff", seller: "Maliha Tabassum", sellerBadge: "EWU Student", condition: "Used - Good", status: "Available", ownerEmail: "maliha@gmail.com", photo: null, desc: "Comfortable fabric sofa with wooden table, minor wear on armrest." },
+    { id: 5, title: "Ergonomic Office Chair + Monitor Stand", price: 4200, area: "Dhanmondi 15", region: "West & Central", type: "single", icon: "🪑", bg: "#e0f2fe", seller: "Farhan Karim", sellerBadge: "Verified Resident", condition: "Like New", status: "Available", ownerEmail: "farhan@gmail.com", photo: null, desc: "Mesh back chair with working hydraulic lift, great for coding/study." },
+    { id: 6, title: "Induction Cooker + Stand Fan + Bookshelf", price: 4100, area: "Ashulia Model Town", region: "DIU & Ashulia", type: "moving-sale", icon: "📦", bg: "#dcfce7", seller: "Mehedi Hasan (DIU SWE)", sellerBadge: "DIU Student", condition: "Used - Good", status: "Available", ownerEmail: "mehedi@gmail.com", photo: null, desc: "All 3 items working great, ideal starter pack for new DIU students." }
+  ];
+
+  // Pre-loaded P2P Inbox Threads (Shows both Buying & Selling Request Flows!)
+  let p2pThreads = [
+    {
+      id: "t-demo-1", itemId: 3, itemTitle: "DIU Senior Moving Sale: Single Bed + Desk + Chair",
+      itemPrice: 5800, area: "Dattapara", otherParty: "Sadia Afrin (DIU CSE)",
+      myRole: "buyer", reqStatus: "Pending", unread: 1,
+      messages: [
+        { sender: "me", text: "Assalamu Alaikum apu, bed ar reading table ta ki ekhono available ache?", time: "3:40 PM" },
+        { sender: "them", text: "Walaikum Assalam! Haa available ache. Tumi chaile ajke bikal-e Dattapara DIU gate-er pashe eshe dekhe jete paro.", time: "3:42 PM" }
+      ]
+    },
+    {
+      id: "t-demo-2", itemId: 99, itemTitle: "My Study Table & Bookshelf (Demo Listing)",
+      itemPrice: 3500, area: "Khagan Bazar", otherParty: "Nayeem Islam (DIU CSE)",
+      myRole: "seller", reqStatus: "Pending", unread: 1,
+      messages: [
+        { sender: "system", text: "⚡ Incoming Buy Request from Nayeem Islam — Offer: ৳3,200" },
+        { sender: "them", text: "Bhaiya, 3,200 taka hole ami ajkei Khagan theke niye jabo!", time: "4:05 PM" }
+      ]
+    }
+  ];
+  let activeThreadId = "t-demo-1";
+  let currentMktView = "browse";
+
+  const movers = [
+    { name: "SafeShift Dhaka Movers", rating: 4.8, price: "৳4,200 - ৳6,500", info: "1-Ton Pickup • 3 Helpers • Uttara / Mirpur / Dhanmondi / Badda" },
+    { name: "Ashulia & DIU Student Pickup", rating: 4.8, price: "৳1,200 - ৳2,400", info: "Mini Pickup • 2 Helpers • Dattapara / Khagan / Ashulia / Savar" },
+    { name: "QuickRelocate Covered Van", rating: 4.9, price: "৳6,000 - ৳8,800", info: "Covered Van • 4 Helpers • Inter-Region Dhaka ↔ Ashulia (Insured)" }
+  ];
+
+  let checklists = {
+    pre: [
+      { t: "Give 2-month notice to current landlord", d: true },
+      { t: "List unwanted furniture on RentSafe+ Moving Sale", d: false },
+      { t: "Book moving pickup/van & packing cartons", d: false },
+      { t: "Clear final gas, WASA, electricity & Wi-Fi bills", d: false }
+    ],
+    post: [
+      { t: "Check WASA/submersible water pressure & tank timing", d: false },
+      { t: "Verify prepaid electricity meter & Titas/cylinder gas safety", d: false },
+      { t: "Test broadband fiber signal inside all bedrooms", d: false },
+      { t: "Collect gate keys, guard contact & service charge receipt", d: false }
+    ]
+  };
+
+  let reports = [
+    { id: 1, target: "Review #104 (Mirpur 10)", reason: "Promotional spam link inside resident review", status: "Pending" },
+    { id: 2, target: "Listing: Dattapara Cheap Seat", reason: "Hidden service charge & misleading photos", status: "Pending" }
+  ];
+
+  let favs = JSON.parse(localStorage.getItem("rs_v5_favs") || "[]");
+  let compareIds = [1, 3, 8];
+  let homeRegion = "All";
+  let areaRegion = "North Dhaka";
+  let currentArea = "Uttara (Sector 10-13)";
+  let currentList = "pre";
+  let booking = null;
+
+  // --- THEME & LANGUAGE ---
+  function applyTheme() {
+    document.documentElement.setAttribute("data-theme", theme);
+    document.querySelectorAll(".theme-toggle-btn").forEach(b => b.textContent = theme === "dark" ? "☀️" : "🌙");
+    localStorage.setItem("rs_v5_theme", theme);
+  }
+  function toggleTheme() { theme = theme === "dark" ? "light" : "dark"; applyTheme(); }
+
+  function applyLang() {
+    const dict = i18n[lang];
+    document.querySelectorAll("[data-i18n]").forEach(el => {
+      const k = el.getAttribute("data-i18n");
+      if (dict[k]) el.textContent = dict[k];
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(el => {
+      const k = el.getAttribute("data-i18n-ph");
+      if (dict[k]) el.placeholder = dict[k];
+    });
+    document.querySelectorAll(".lang-toggle-btn").forEach(b => b.textContent = lang === "en" ? "🌐 বাংলা" : "🌐 EN");
+    localStorage.setItem("rs_v5_lang", lang);
+    if (currentUser) { renderRegionBars(); renderHomes(); renderArea(); renderPortal(); }
+  }
+  function toggleLang() { lang = lang === "en" ? "bn" : "en"; applyLang(); }
+
+  // --- AUTH GATE ---
+  function syncAuthView() {
+    if (currentUser) {
+      document.getElementById("authGate").style.display = "none";
+      document.getElementById("appShell").style.display = "block";
+      document.getElementById("userBtn").innerHTML = `👤 ${currentUser.name.split(" ")[0]} <span class="badge b-green">${currentUser.role}</span>`;
+      document.getElementById("profRole").textContent = "🛡️ " + currentUser.role + " Account";
+      document.getElementById("profName").textContent = currentUser.name;
+      document.getElementById("profEmail").textContent = currentUser.email;
+      renderRegionBars();
+      renderHomes();
+      renderArea();
+      updateCalculator();
+      renderCompare();
+      renderMarket();
+      renderMovers();
+      renderChecklist();
+      renderPortal();
+    } else {
+      document.getElementById("authGate").style.display = "flex";
+      document.getElementById("appShell").style.display = "none";
+    }
+  }
+
+  function switchAuthTab(mode) {
+    document.getElementById("tLogin").classList.toggle("active", mode === "login");
+    document.getElementById("tReg").classList.toggle("active", mode === "reg");
+    document.getElementById("loginForm").style.display = mode === "login" ? "block" : "none";
+    document.getElementById("regForm").style.display = mode === "reg" ? "block" : "none";
+    document.getElementById("authErr").style.display = "none";
+  }
+
+  function fillDemo(email, pass) {
+    document.getElementById("inEmail").value = email;
+    document.getElementById("inPass").value = pass;
+    toast(lang === "bn" ? "ডেমো অ্যাকাউন্ট বসানো হয়েছে! এখন লগইন ক্লিক করুন।" : "Demo credentials filled! Click Login to enter.");
+  }
+
+  function handleLogin() {
+    const email = document.getElementById("inEmail").value.trim().toLowerCase();
+    const pass = document.getElementById("inPass").value.trim();
+    const err = document.getElementById("authErr");
+    const found = users.find(u => u.email.toLowerCase() === email && u.pass === pass);
+    if (!found) {
+      err.style.display = "block";
+      err.textContent = lang === "bn" ? "ভুল ইমেইল বা পাসওয়ার্ড! নিচের ডেমো অ্যাকাউন্ট ক্লিক করুন।" : "Invalid email or password! Click any demo account below.";
+      return;
+    }
+    err.style.display = "none";
+    currentUser = found;
+    localStorage.setItem("rs_v5_current_user", JSON.stringify(currentUser));
+    syncAuthView();
+    toast(`✅ Welcome, ${found.name} (${found.role})!`);
+  }
+
+  function handleRegister() {
+    const name = document.getElementById("regName").value.trim();
+    const email = document.getElementById("regEmail").value.trim().toLowerCase();
+    const pass = document.getElementById("regPass").value.trim();
+    const role = document.getElementById("regRole").value;
+    if (!name || !email || pass.length < 4) { toast("Please fill all fields (min 4 char password)."); return; }
+    const newUser = { name, email, pass, role };
+    users.push(newUser);
+    localStorage.setItem("rs_v5_users", JSON.stringify(users));
+    currentUser = newUser;
+    localStorage.setItem("rs_v5_current_user", JSON.stringify(currentUser));
+    syncAuthView();
+    toast(`🎉 Welcome, ${name}!`);
+  }
+
+  function logoutUser() {
+    currentUser = null;
+    localStorage.removeItem("rs_v5_current_user");
+    closeModal("profileModal");
+    document.getElementById("inEmail").value = "";
+    document.getElementById("inPass").value = "";
+    syncAuthView();
+    toast(lang === "bn" ? "লগআউট হয়েছে।" : "Logged out.");
+  }
+
+  // --- REGION BARS ---
+  function renderRegionBars() {
+    const lbl = lang === "bn" ? "অঞ্চল:" : "Region:";
+    document.getElementById("homeRegionBar").innerHTML = `<span class="region-label">${lbl}</span>` + regions.map(r =>
+      `<button class="reg-pill ${homeRegion === r.id ? 'active' : ''}" onclick="homeRegion='${r.id}'; renderRegionBars(); renderHomes();">${r[lang]}</button>`
+    ).join("");
+
+    document.getElementById("areaRegionBar").innerHTML = `<span class="region-label">${lbl}</span>` + regions.filter(r => r.id !== "All").map(r =>
+      `<button class="reg-pill ${areaRegion === r.id ? 'active' : ''}" onclick="selectAreaRegion('${r.id}')">${r[lang]}</button>`
+    ).join("");
+  }
+
+  function selectAreaRegion(reg) {
+    areaRegion = reg;
+    const firstInReg = Object.keys(areaDB).find(k => areaDB[k].region === reg);
+    if (firstInReg) currentArea = firstInReg;
+    renderRegionBars();
+    renderArea();
+  }
+
+  // --- NAV & HELPERS ---
+  function goTab(id, btn) {
+    document.querySelectorAll(".section").forEach(s => s.classList.remove("active"));
+    document.getElementById(id).classList.add("active");
+    document.querySelectorAll("#topNav button").forEach(b => b.classList.remove("active"));
+    if (btn) btn.classList.add("active");
+    else {
+      const idx = ["explore","area","calc","market","moving","portal"].indexOf(id);
+      if (idx >= 0) document.querySelectorAll("#topNav button")[idx].classList.add("active");
+    }
+    if (id === "calc") renderCompare();
+    if (id === "area") renderArea();
+    if (id === "portal") renderPortal();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+  function toast(msg) { const t = document.getElementById("toast"); t.textContent = msg; t.style.display = "block"; setTimeout(() => t.style.display = "none", 2600); }
+  function openModal(id) { document.getElementById(id).classList.add("open"); }
+  function closeModal(id) { document.getElementById(id).classList.remove("open"); }
+
+  // --- HOMES ---
+  function renderHomes() {
+    const q = document.getElementById("qSearch").value.toLowerCase();
+    const maxR = Number(document.getElementById("qBudget").value);
+    const f = document.getElementById("qFilter").value;
+    const list = homes.filter(h =>
+      (homeRegion === "All" || h.region === homeRegion) &&
+      (h.area.toLowerCase().includes(q) || h.title.toLowerCase().includes(q) || h.region.toLowerCase().includes(q)) &&
+      h.rent <= maxR &&
+      (f === "all" || (f === "fav" && favs.includes(h.id)) || (f === "safe" && h.flood === "Low"))
+    );
+
+    const regTitle = regions.find(r => r.id === homeRegion)[lang];
+    document.getElementById("homesTitle").textContent = `${regTitle} — ${lang === "bn" ? "উপলব্ধ বাসা" : "Available Homes"} (${list.length})`;
+    document.getElementById("compBadge").textContent = compareIds.length;
+
+    document.getElementById("homesGrid").innerHTML = list.map(h => {
+      const trueEst = h.rent + h.service + 1880;
+      const fClass = h.flood === "Low" ? "b-green" : h.flood === "Medium" ? "b-yellow" : "b-red";
+      return `
+        <div class="card hoverable">
+          <div class="prop-visual" style="cursor:pointer;" onclick="showHome(${h.id})">
+            ${h.photo ? `<img class="prop-photo-img" src="${h.photo}" alt="${h.title}"><div class="prop-photo-overlay"></div>` : buildingSVG(h.colors[0], h.colors[1], h.colors[2])}
+            <div class="prop-top"><span class="badge ${fClass}">🌊 ${h.flood}</span><span class="badge b-dark">⭐ ${h.score}</span></div>
+            <div class="prop-bottom"><span class="badge b-dark">📍 ${h.area}</span><span class="badge b-dark">${h.tag}</span></div>
+          </div>
+          <div>
+            <div style="font-size:0.74rem; font-weight:700; color:var(--muted); margin-bottom:2px;">${h.region} • ${h.rooms}</div>
+            <h3 style="font-size:1.02rem; margin-bottom:5px;">${h.title}</h3>
+            <div class="price-row">
+              <span class="price">৳${h.rent.toLocaleString()}<small style="font-size:0.75rem; color:var(--muted);">/mo</small></span>
+              <span class="true-cost-tag">${lang === "bn" ? "মোট আনুমানিক:" : "True est:"} ৳${trueEst.toLocaleString()}</span>
+            </div>
+          </div>
+          ${h.desc ? `<div class="post-desc">${h.desc}</div>` : ""}
+          <div class="chip-row">${h.fac.map(x => `<span class="chip">${x}</span>`).join("")}</div>
+          <div style="display:flex; gap:7px; margin-top:auto; padding-top:10px; border-top:1px solid var(--border);">
+            <button class="btn" style="flex:1; padding:8px;" onclick="showHome(${h.id})">${lang === "bn" ? "বিস্তারিত" : "Details"}</button>
+            <button class="btn-soft" style="padding:8px 10px;" onclick="chatWithLandlord(${h.id})">💬</button>
+            <button class="btn-outline" onclick="toggleCompare(${h.id})">${compareIds.includes(h.id) ? "✓" : "⚖️"}</button>
+            <button class="btn-outline" onclick="toggleFav(${h.id})">${favs.includes(h.id) ? "❤️" : "🤍"}</button>
+          </div>
+        </div>`;
+    }).join("") || "<p>No homes match your current filters.</p>";
+
+    document.getElementById("mapPins").innerHTML = list.map(h => `<div class="map-pin" style="left:${h.x}; top:${h.y};" onclick="showHome(${h.id})"><span class="pin-dot"></span> ৳${(h.rent/1000).toFixed(1)}k • ${h.area.split(' ')[0]}</div>`).join("");
+  }
+
+  function toggleMap() { document.getElementById("mapPanel").classList.toggle("open"); }
+  function toggleFav(id) { favs = favs.includes(id) ? favs.filter(x => x !== id) : [...favs, id]; localStorage.setItem("rs_v5_favs", JSON.stringify(favs)); renderHomes(); toast(favs.includes(id) ? "❤️ Saved!" : "Removed."); }
+  function toggleCompare(id) { if (compareIds.includes(id)) compareIds = compareIds.filter(x => x !== id); else { if (compareIds.length >= 3) { toast("Max 3 homes."); return; } compareIds.push(id); } renderHomes(); toast("⚖️ Comparison updated."); }
+
+  function showHome(id) {
+    const h = homes.find(x => x.id === id);
+    const est = h.rent + h.service + 1880;
+    const aiInfo = areaDB[h.area];
+    document.getElementById("detailBody").innerHTML = `
+      <div class="prop-visual" style="height:200px; margin-bottom:14px;">
+        ${h.photo ? `<img class="prop-photo-img" src="${h.photo}" alt="${h.title}"><div class="prop-photo-overlay"></div>` : buildingSVG(h.colors[0], h.colors[1], h.colors[2])}
+        <div class="prop-top"><span class="badge b-dark">${h.region}</span><span class="badge b-dark">⭐ ${h.score}</span></div>
+        <div class="prop-bottom"><span class="badge b-dark">📍 ${h.area}</span><span class="badge b-dark">${h.tag}</span></div>
+      </div>
+      <h2 style="margin-bottom:3px;">${h.title}</h2>
+      <div style="font-size:0.82rem; color:var(--muted); margin-bottom:10px;">👤 Owner: <strong>${h.landlord || 'Verified Owner'}</strong> • ${h.rooms}</div>
+      ${h.desc ? `<div class="post-desc-full"><strong>📝 ${lang === 'bn' ? 'বাসার বিবরণ:' : 'Post Details:'}</strong><br>${h.desc}</div>` : ""}
+      <div class="ai-card" style="margin-bottom:12px;">
+        <div class="ai-header"><span>🧮 True Monthly Estimate: ৳${est.toLocaleString()}</span></div>
+        <p style="font-size:0.83rem; color:var(--text-secondary);">Rent (৳${h.rent.toLocaleString()}) + Service (৳${h.service.toLocaleString()}) + Est. Gas & Water (৳1,880).</p>
+        ${aiInfo ? `<p style="font-size:0.81rem; color:var(--primary); margin-top:6px;"><strong>AI Fair-Rent Check:</strong> ${aiInfo.rentRange}</p>` : ""}
+      </div>
+      <div class="chip-row" style="margin-bottom:14px;">${h.fac.map(x => `<span class="chip">✓ ${x}</span>`).join("")}</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" onclick="closeModal('detailModal'); chatWithLandlord(${h.id});">💬 ${lang === 'bn' ? 'বাড়িওয়ালার সাথে কথা বলুন' : 'Chat with Owner'}</button>
+        <button class="btn-soft" onclick="closeModal('detailModal'); areaRegion='${h.region}'; currentArea='${h.area}'; renderRegionBars(); goTab('area');">✨ AI Area Report</button>
+        <button class="btn-outline" onclick="closeModal('detailModal'); document.getElementById('cRent').value=${h.rent}; document.getElementById('cService').value=${h.service}; updateCalculator(); goTab('calc');">🧮 Calculator</button>
+      </div>`;
+    openModal("detailModal");
+  }
+
+  function chatWithLandlord(homeId) {
+    const h = homes.find(x => x.id === homeId);
+    if (!h) return;
+    let thread = p2pThreads.find(t => t.itemId === "home-" + homeId);
+    if (!thread) {
+      thread = {
+        id: "th-" + Date.now(), itemId: "home-" + homeId, itemTitle: "🏠 " + h.title,
+        itemPrice: h.rent, area: h.area, otherParty: (h.landlord || "Landlord") + " (Owner)",
+        myRole: "buyer", reqStatus: "Chatting", unread: 0,
+        messages: [{ sender: "system", text: `🏠 Started chat with ${h.landlord || 'Owner'} for "${h.title}" (৳${h.rent.toLocaleString()}/mo)` }]
+      };
+      p2pThreads.unshift(thread);
+    }
+    activeThreadId = thread.id;
+    goTab("market");
+    switchMktView("inbox");
+  }
+
+  // --- AREA REALITY & AI ANALYST ---
+  function renderArea() {
+    const areasInReg = Object.keys(areaDB).filter(k => areaDB[k].region === areaRegion);
+    if (!areasInReg.includes(currentArea)) currentArea = areasInReg[0];
+
+    document.getElementById("areaTabs").innerHTML = areasInReg.map(a =>
+      `<button class="area-tab ${a === currentArea ? 'active' : ''}" onclick="currentArea='${a}'; renderArea();">${a}</button>`
+    ).join("");
+
+    const d = areaDB[currentArea];
+    document.getElementById("selectedAreaTitle").textContent = currentArea;
+    document.getElementById("selectedRegionTag").textContent = d.region + " Zone";
+    const pill = document.getElementById("floodPill");
+    pill.textContent = "🌊 " + d.flood;
+    pill.className = "badge " + (d.flood.includes("Low") ? "b-green" : d.flood.includes("High") ? "b-red" : "b-yellow");
+
+    const metrics = [["💧 Water", d.water, "#0ea5e9"], ["⚡ Power", d.power, "#f59e0b"], ["📶 Net", d.net, "#6366f1"], ["🚇 Transit", d.trans, "#10b981"], ["🔇 Peace", d.quiet, "#14b8a6"]];
+    document.getElementById("gaugeGrid").innerHTML = metrics.map(([lbl, val, col]) =>
+      `<div class="gauge-card"><div class="ring" style="background:conic-gradient(${col} ${val*3.6}deg, var(--border) 0deg);"><div class="ring-inner">${val}%</div></div><span>${lbl}</span></div>`
+    ).join("");
+
+    document.getElementById("aiBestFor").textContent = "Best for: " + d.bestFor;
+    document.getElementById("aiAreaSummary").textContent = d.ai;
+    document.getElementById("aiRentRange").textContent = d.rentRange;
+    document.getElementById("aiGasPower").textContent = d.gasPower;
+    document.getElementById("aiTransit").textContent = d.transit;
+    document.getElementById("aiWatchout").textContent = d.watchout;
+
+    const rList = reviews.filter(r => r.area === currentArea);
+    const mk = r => `<div style="border:1px solid var(--border); padding:11px; border-radius:12px; background:var(--surface-alt);"><div style="display:flex; justify-content:space-between; margin-bottom:4px;"><strong>${r.author}</strong><span class="badge ${r.ver ? 'b-green' : 'b-yellow'}">${r.ver ? '✓ Verified' : 'Unverified'}</span></div><p style="font-size:0.85rem; color:var(--text-secondary);">${r.text}</p></div>`;
+    document.getElementById("verRevList").innerHTML = rList.filter(r => r.ver).map(mk).join("") || "<p style='font-size:0.84rem; color:var(--muted);'>No verified reviews yet.</p>";
+    document.getElementById("unverRevList").innerHTML = rList.filter(r => !r.ver).map(mk).join("") || "<p style='font-size:0.84rem; color:var(--muted);'>No unverified reviews yet.</p>";
+    document.getElementById("qaContainer").innerHTML = qas.filter(x => x.area === currentArea).map(x => `<div style="background:var(--surface-alt); border:1px solid var(--border); padding:11px; border-radius:12px; font-size:0.85rem;"><div><strong>Q:</strong> ${x.q}</div><div style="color:var(--primary); margin-top:4px;"><strong>Resident:</strong> ${x.a}</div></div>`).join("") || "<p style='font-size:0.84rem; color:var(--muted);'>No questions yet for this area. Ask the first one!</p>";
+  }
+  function submitQA() { const i = document.getElementById("qaText"); if (!i.value.trim()) return; qas.unshift({ area: currentArea, q: i.value.trim(), a: "Waiting for a verified local resident reply..." }); i.value = ""; renderArea(); toast("💬 Question posted!"); }
+  function submitReview() { const author = document.getElementById("rAuthor").value.trim() || (currentUser ? currentUser.name : "Resident"); const text = document.getElementById("rText").value.trim(); const ver = document.getElementById("rVer").value === "true"; if (!text) return; reviews.unshift({ area: currentArea, author, ver, text }); closeModal("reviewModal"); document.getElementById("rText").value = ""; renderArea(); toast("✅ Review added!"); }
+
+  // --- CALCULATOR & COMPARE ---
+  function updateCalculator() {
+    const vals = [["Rent", Number(document.getElementById("cRent").value)||0, "#0f766e"], ["Service", Number(document.getElementById("cService").value)||0, "#14b8a6"], ["Gas & Water", (Number(document.getElementById("cGas").value)||0)+(Number(document.getElementById("cWater").value)||0), "#f59e0b"], ["Parking & Wi-Fi", (Number(document.getElementById("cPark").value)||0)+(Number(document.getElementById("cOther").value)||0), "#3b82f6"]];
+    const total = vals.reduce((a, b) => a + b[1], 0) || 1;
+    let deg = 0;
+    const stops = vals.map(([_, v, col]) => { const s = deg; deg += (v/total)*360; return `${col} ${s}deg ${deg}deg`; });
+    document.getElementById("costDonut").style.background = `conic-gradient(${stops.join(",")})`;
+    document.getElementById("donutTotal").textContent = "৳" + total.toLocaleString();
+    document.getElementById("costLegend").innerHTML = vals.map(([l, v, c]) => `<div class="legend-item"><span><span class="dot" style="background:${c}"></span>${l}</span><strong>৳${v.toLocaleString()}</strong></div>`).join("");
+  }
+  function renderCompare() {
+    const sel = homes.filter(h => compareIds.includes(h.id));
+    document.getElementById("compareBox").innerHTML = sel.length ? `<table><thead><tr><th>Metric</th>${sel.map(h => `<th>${h.title}</th>`).join("")}</tr></thead><tbody><tr><td>Region</td>${sel.map(h => `<td>${h.region}</td>`).join("")}</tr><tr><td>Area</td>${sel.map(h => `<td>${h.area}</td>`).join("")}</tr><tr><td>Rent</td>${sel.map(h => `<td>৳${h.rent.toLocaleString()}</td>`).join("")}</tr><tr><td>True Est.</td>${sel.map(h => `<td style="color:var(--primary); font-weight:800;">৳${(h.rent+h.service+1880).toLocaleString()}</td>`).join("")}</tr><tr><td>Flood Risk</td>${sel.map(h => `<td>${h.flood}</td>`).join("")}</tr><tr><td>Rating</td>${sel.map(h => `<td>⭐ ${h.score}</td>`).join("")}</tr></tbody></table>` : "<p>Select homes from the Homes tab to compare.</p>";
+  }
+
+  // --- COMPLETE P2P MARKETPLACE, REQUESTS & INBOX ---
+  function switchMktView(view) {
+    currentMktView = view;
+    document.getElementById("mktTabBrowse").classList.toggle("active", view === "browse");
+    document.getElementById("mktTabInbox").classList.toggle("active", view === "inbox");
+    document.getElementById("mktTabMine").classList.toggle("active", view === "mine");
+    document.getElementById("mktViewBrowse").style.display = view === "browse" ? "block" : "none";
+    document.getElementById("mktViewInbox").style.display = view === "inbox" ? "block" : "none";
+    document.getElementById("mktViewMine").style.display = view === "mine" ? "block" : "none";
+    if (view === "browse") renderMarket();
+    if (view === "inbox") renderInbox();
+    if (view === "mine") renderMyListings();
+  }
+
+  function updateInboxBadge() {
+    const count = p2pThreads.reduce((acc, t) => acc + (t.unread || 0), 0);
+    const el = document.getElementById("inboxCount");
+    if (el) { el.textContent = count; el.style.display = count > 0 ? "inline-block" : "none"; }
+  }
+
+  function renderMarket() {
+    updateInboxBadge();
+    const q = document.getElementById("mSearch").value.toLowerCase();
+    const f = document.getElementById("mFilter").value;
+    const list = market.filter(i => (i.title.toLowerCase().includes(q) || i.area.toLowerCase().includes(q) || i.seller.toLowerCase().includes(q)) && (f === "all" || (f === "moving-sale" && i.type === "moving-sale") || i.region === f));
+
+    document.getElementById("marketGrid").innerHTML = list.map(i => `
+      <div class="card hoverable">
+        <div class="item-art" style="background:${i.bg}; overflow:hidden;">
+          ${i.photo ? `<img class="item-photo-img" src="${i.photo}" alt="${i.title}">` : `<span>${i.icon}</span>`}
+          <span class="badge ${i.type === 'moving-sale' ? 'b-blue' : 'b-green'}" style="position:absolute; top:10px; left:10px;">
+            ${i.type === 'moving-sale' ? '📦 Moving Sale' : 'Used Item'}
+          </span>
+          <span class="badge ${i.status === 'Sold' ? 'b-red' : 'b-dark'}" style="position:absolute; top:10px; right:10px;">
+            ${i.status}
+          </span>
+        </div>
+        <div>
+          <h3 style="font-size:1rem; margin-bottom:4px;">${i.title}</h3>
+          <div style="font-size:0.8rem; color:var(--muted);">📍 ${i.area} (${i.region})</div>
+          <div style="font-size:0.8rem; color:var(--text-secondary); margin-top:4px;">👤 Seller: <strong>${i.seller}</strong> <span class="badge b-green" style="font-size:0.68rem;">${i.sellerBadge}</span></div>
+        </div>
+        ${i.desc ? `<div class="post-desc">${i.desc}</div>` : ""}
+        <div class="price-row" style="margin-top:auto;">
+          <span class="price">৳${i.price.toLocaleString()}</span>
+          <span style="font-size:0.75rem; color:var(--muted);">${i.condition}</span>
+        </div>
+        <div style="display:flex; gap:8px; padding-top:8px; border-top:1px solid var(--border);">
+          <button class="btn" style="flex:1; padding:8px;" onclick="startP2PChat(${i.id}, false)" ${i.status === 'Sold' ? 'disabled style="opacity:0.5; flex:1; padding:8px;"' : ''}>💬 ${lang === 'bn' ? 'চ্যাট / অফার' : 'Chat / Offer'}</button>
+          <button class="btn-soft" style="padding:8px 11px;" onclick="startP2PChat(${i.id}, true)" ${i.status === 'Sold' ? 'disabled style="opacity:0.5;"' : ''}>⚡ ${lang === 'bn' ? 'কিনতে চাই' : 'Buy Request'}</button>
+        </div>
+      </div>`).join("") || "<p>No items found.</p>";
+  }
+
+  function startP2PChat(itemId, isDirectRequest) {
+    const item = market.find(x => x.id === itemId);
+    if (!item) return;
+    let thread = p2pThreads.find(t => t.itemId === itemId && t.myRole === "buyer");
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+    if (!thread) {
+      thread = {
+        id: "t-" + Date.now(), itemId: item.id, itemTitle: item.title, itemPrice: item.price,
+        area: item.area, otherParty: item.seller, myRole: "buyer",
+        reqStatus: isDirectRequest ? "Pending" : "Chatting", unread: 0,
+        messages: []
+      };
+      p2pThreads.unshift(thread);
+    }
+
+    if (isDirectRequest) {
+      thread.reqStatus = "Pending";
+      thread.messages.push({ sender: "system", text: `⚡ Buy Request sent to ${item.seller} at ৳${item.price.toLocaleString()}` });
+      thread.messages.push({ sender: "me", text: `Hi ${item.seller.split(' ')[0]}, I want to buy "${item.title}" for ৳${item.price.toLocaleString()}. When can I pick it up from ${item.area}?`, time: now });
+      toast(`⚡ Buy Request sent to ${item.seller}! Opening Inbox...`);
+      setTimeout(() => {
+        thread.messages.push({ sender: "them", text: `Request received! Tumi ajke bikal 5 tar por ${item.area}-e eshe dekhe nite paro. Ami confirm kore rakhlam.`, time: now });
+        thread.reqStatus = "Accepted";
+        if (currentMktView === "inbox" && activeThreadId === thread.id) renderInbox();
+        else { thread.unread = (thread.unread || 0) + 1; updateInboxBadge(); }
+      }, 1200);
+    }
+
+    activeThreadId = thread.id;
+    switchMktView("inbox");
+  }
+
+  function renderInbox() {
+    updateInboxBadge();
+    const sidebar = document.getElementById("inboxThreads");
+    const pane = document.getElementById("chatPane");
+
+    if (!p2pThreads.length) {
+      sidebar.innerHTML = "<div style='padding:16px; color:var(--muted);'>No conversations yet.</div>";
+      pane.innerHTML = "<div style='padding:30px; text-align:center; color:var(--muted);'>Select an item from Browse to start chatting.</div>";
+      return;
+    }
+
+    sidebar.innerHTML = p2pThreads.map(t => {
+      const lastMsg = t.messages.length ? t.messages[t.messages.length - 1].text : "Start conversation...";
+      const stBadge = t.reqStatus === "Accepted" ? "b-green" : t.reqStatus === "Declined" ? "b-red" : "b-yellow";
+      return `
+        <div class="thread-item ${t.id === activeThreadId ? 'active' : ''}" onclick="openThread('${t.id}')">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+            <strong style="font-size:0.88rem;">${t.otherParty}</strong>
+            <span class="badge ${t.myRole === 'seller' ? 'b-blue' : 'b-green'}" style="font-size:0.66rem;">${t.myRole === 'seller' ? 'Incoming' : 'Buying'}</span>
+          </div>
+          <div style="font-size:0.78rem; font-weight:700; color:var(--primary); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${t.itemTitle}</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+            <span style="font-size:0.75rem; color:var(--muted); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:190px;">${lastMsg}</span>
+            <span class="badge ${stBadge}" style="font-size:0.65rem;">${t.reqStatus}</span>
+          </div>
+        </div>`;
+    }).join("");
+
+    const active = p2pThreads.find(t => t.id === activeThreadId) || p2pThreads[0];
+    active.unread = 0;
+    updateInboxBadge();
+
+    const stBadge = active.reqStatus === "Accepted" ? "b-green" : active.reqStatus === "Declined" ? "b-red" : "b-yellow";
+    pane.innerHTML = `
+      <div class="chat-header">
+        <div>
+          <strong style="font-size:0.95rem;">${active.otherParty}</strong>
+          <div style="font-size:0.78rem; color:var(--muted);">📦 ${active.itemTitle} • <strong>৳${active.itemPrice.toLocaleString()}</strong> • 📍 ${active.area}</div>
+        </div>
+        <span class="badge ${stBadge}">Status: ${active.reqStatus}</span>
+      </div>
+
+      <div class="chat-messages" id="chatMsgsScroll">
+        ${active.messages.map(m => {
+          if (m.sender === "system") return `<div class="msg-system">${m.text}</div>`;
+          return `<div class="msg-bubble ${m.sender === 'me' ? 'msg-me' : 'msg-them'}">${m.text}<span class="msg-time">${m.time || ''}</span></div>`;
+        }).join("")}
+      </div>
+
+      <div class="chat-actions-bar">
+        ${active.myRole === "buyer" ? `
+          <button class="btn-soft" style="padding:5px 10px; font-size:0.78rem;" onclick="sendQuickOffer('${active.id}')">💰 Make Offer</button>
+          <button class="btn-soft" style="padding:5px 10px; font-size:0.78rem;" onclick="sendBuyReqInChat('${active.id}')">⚡ Send Buy Request</button>
+        ` : `
+          <button class="btn" style="padding:5px 11px; font-size:0.78rem;" onclick="sellerAction('${active.id}', 'Accepted')">✅ Accept Request</button>
+          <button class="btn-danger" style="padding:5px 11px; font-size:0.78rem;" onclick="sellerAction('${active.id}', 'Declined')">✕ Decline</button>
+        `}
+      </div>
+
+      <div class="chat-input-bar">
+        <input id="chatInp" type="text" placeholder="Type a message to ${active.otherParty}..." onkeydown="if(event.key==='Enter') sendChatMsg('${active.id}')">
+        <button class="btn" onclick="sendChatMsg('${active.id}')">Send</button>
+      </div>`;
+
+    const sc = document.getElementById("chatMsgsScroll");
+    if (sc) sc.scrollTop = sc.scrollHeight;
+  }
+
+  function openThread(id) { activeThreadId = id; renderInbox(); }
+
+  function sendChatMsg(threadId) {
+    const inp = document.getElementById("chatInp");
+    const txt = inp.value.trim();
+    if (!txt) return;
+    const t = p2pThreads.find(x => x.id === threadId);
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    t.messages.push({ sender: "me", text: txt, time: now });
+    inp.value = "";
+    renderInbox();
+
+    // Realistic demo auto-reply
+    setTimeout(() => {
+      const reply = t.myRole === "buyer"
+        ? `Thanks! ${t.area}-e eshe dekhe nite paro. Confirm hole amake ekhane janio.`
+        : `Okay bhaiya, ami tahole ajke bikal-e eshe niye jacchi!`;
+      t.messages.push({ sender: "them", text: reply, time: now });
+      if (currentMktView === "inbox" && activeThreadId === t.id) renderInbox();
+      else { t.unread = (t.unread || 0) + 1; updateInboxBadge(); }
+    }, 900);
+  }
+
+  function sendQuickOffer(threadId) {
+    const t = p2pThreads.find(x => x.id === threadId);
+    const offer = prompt(`Enter your offer price (৳) for "${t.itemTitle}" (Listed: ৳${t.itemPrice}):`, Math.round(t.itemPrice * 0.9));
+    if (!offer || isNaN(offer)) return;
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    t.reqStatus = "Offer Sent";
+    t.messages.push({ sender: "system", text: `💰 You sent a price offer: ৳${Number(offer).toLocaleString()}` });
+    renderInbox();
+    setTimeout(() => {
+      t.messages.push({ sender: "them", text: `৳${Number(offer).toLocaleString()} offer ta bhalo! Tumi ajke nile deal done.`, time: now });
+      t.reqStatus = "Accepted";
+      renderInbox();
+    }, 1000);
+  }
+
+  function sendBuyReqInChat(threadId) {
+    const t = p2pThreads.find(x => x.id === threadId);
+    t.reqStatus = "Pending";
+    t.messages.push({ sender: "system", text: `⚡ Buy Request sent for ৳${t.itemPrice.toLocaleString()} — Waiting for seller confirmation.` });
+    renderInbox();
+    toast("⚡ Buy request sent!");
+  }
+
+  function sellerAction(threadId, status) {
+    const t = p2pThreads.find(x => x.id === threadId);
+    t.reqStatus = status;
+    t.messages.push({ sender: "system", text: status === "Accepted" ? "✅ You ACCEPTED the buyer's request! Pickup can now be scheduled." : "✕ You declined this buy request." });
+    renderInbox();
+    toast(`Request ${status}!`);
+  }
+
+  function renderMyListings() {
+    const myEmail = currentUser ? currentUser.email : "";
+    const myItems = market.filter(i => i.ownerEmail === myEmail);
+    const box = document.getElementById("myListingsGrid");
+    if (!myItems.length) {
+      box.innerHTML = `<div class="lock-card" style="grid-column:1/-1;"><span class="lock-icon">📦</span><h3>${lang === 'bn' ? 'আপনার এখনো কোনো পোস্ট নেই' : 'No Items Listed Yet'}</h3><p style="color:var(--muted); margin:8px 0 14px;">${lang === 'bn' ? 'পুরানো ফার্নিচার বিক্রি করতে উপরের "+ বিক্রি / মুভিং সেল" বাটনে ক্লিক করুন।' : 'Click "+ Sell / Moving Sale" above to list an item and receive P2P buy requests in your Inbox.'}</p></div>`;
+      return;
+    }
+    box.innerHTML = myItems.map(i => `
+      <div class="card">
+        <div class="item-art" style="background:${i.bg}; overflow:hidden;">
+          ${i.photo ? `<img class="item-photo-img" src="${i.photo}" alt="${i.title}">` : `<span>${i.icon}</span>`}
+          <span class="badge ${i.status === 'Sold' ? 'b-red' : 'b-green'}" style="position:absolute; top:10px; right:10px;">${i.status}</span>
+        </div>
+        <h3>${i.title}</h3>
+        <div style="font-size:0.82rem; color:var(--muted);">📍 ${i.area} • ৳${i.price.toLocaleString()}</div>
+        <div style="display:flex; gap:8px; margin-top:auto;">
+          <button class="btn-soft" style="flex:1;" onclick="markItemSold(${i.id})">${i.status === 'Sold' ? 'Mark Available' : '✅ Mark as Sold'}</button>
+          <button class="btn-outline" onclick="switchMktView('inbox')">💬 Inbox</button>
+        </div>
+      </div>`).join("");
+  }
+
+  function markItemSold(id) {
+    const it = market.find(x => x.id === id);
+    if (it) it.status = it.status === "Sold" ? "Available" : "Sold";
+    renderMyListings();
+    toast("Listing status updated!");
+  }
+
+  function addMarket() {
+    const title = document.getElementById("mTitle").value.trim();
+    const price = Number(document.getElementById("mPrice").value);
+    const [area, region] = document.getElementById("mArea").value.split("|");
+    const type = document.getElementById("mType").value;
+    const desc = document.getElementById("mDesc").value.trim();
+    if (!title || !price) return;
+    const newItem = {
+      id: Date.now(), title, price, area, region, type, desc,
+      icon: type === "moving-sale" ? "📦" : "🛋️", bg: "#e0f2fe",
+      seller: currentUser ? currentUser.name : "You",
+      sellerBadge: currentUser ? currentUser.role : "Member",
+      condition: "Used - Good", status: "Available", photo: uploadedMarketPhoto,
+      ownerEmail: currentUser ? currentUser.email : ""
+    };
+    market.unshift(newItem);
+    closeModal("sellModal");
+    document.getElementById("mTitle").value = "";
+    document.getElementById("mPrice").value = "";
+    document.getElementById("mDesc").value = "";
+    uploadedMarketPhoto = null;
+    if (document.getElementById("mPhotoPrev")) document.getElementById("mPhotoPrev").innerHTML = "";
+    renderMarket();
+    toast("📦 Published! Demo buyer request will arrive in your P2P Inbox shortly...");
+
+    // Simulate an incoming P2P buyer request so user can test seller side immediately
+    setTimeout(() => {
+      const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      p2pThreads.unshift({
+        id: "t-in-" + Date.now(), itemId: newItem.id, itemTitle: newItem.title,
+        itemPrice: newItem.price, area: newItem.area, otherParty: "Siam Ahmed (Student)",
+        myRole: "seller", reqStatus: "Pending", unread: 1,
+        messages: [
+          { sender: "system", text: `⚡ New Buy Request from Siam Ahmed for ৳${newItem.price.toLocaleString()}` },
+          { sender: "them", text: `Hi! "${newItem.title}" ta ki ekhono ache? Ami ${newItem.area} theke nite chai.`, time: now }
+        ]
+      });
+      updateInboxBadge();
+      toast("🔔 New P2P Buy Request arrived in your Inbox!");
+    }, 2200);
+  }
+
+  function renderMovers() {
+    document.getElementById("moversBox").innerHTML = movers.map(m => `<div style="border:1px solid var(--border); padding:12px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; background:var(--surface-alt);"><div><strong>${m.name}</strong> <span class="badge b-green">⭐ ${m.rating}</span><div style="font-size:0.8rem; color:var(--muted);">${m.info}</div><div style="font-weight:800; color:var(--primary); font-size:0.88rem;">${m.price}</div></div><button class="btn" style="padding:7px 13px;" onclick="bookMover('${m.name}')">Book</button></div>`).join("");
+  }
+  function bookMover(name) { booking = { name, from: document.getElementById("mvFrom").value.trim() || "Mirpur 10", to: document.getElementById("mvTo").value.trim() || "Uttara Sector 11", step: 0 }; renderTracker(); toast(`🚚 Booked ${name}!`); }
+  function renderTracker() { if (!booking) return; const steps = ["1. Assigned", "2. Loading", "3. Transit", "4. Delivered"]; document.getElementById("trackerBox").innerHTML = `<div><strong>${booking.name}</strong> • ${booking.from} → ${booking.to}</div><div class="stepper">${steps.map((s, i) => `<div class="step ${i <= booking.step ? 'active' : ''}">${s}</div>`).join("")}</div><button class="btn-soft" style="margin-top:10px;" onclick="if(booking.step<3){booking.step++;renderTracker();}">▶ Next Status</button>`; }
+
+  function setChecklist(type) { currentList = type; document.getElementById("tabPre").className = type === "pre" ? "btn" : "btn-outline"; document.getElementById("tabPost").className = type === "post" ? "btn" : "btn-outline"; renderChecklist(); }
+  function renderChecklist() {
+    const arr = checklists[currentList];
+    const pct = arr.length ? Math.round((arr.filter(x => x.d).length / arr.length) * 100) : 0;
+    document.getElementById("checkPct").textContent = pct + "%";
+    document.getElementById("checkBar").style.width = pct + "%";
+    document.getElementById("checkListBox").innerHTML = arr.map((x, i) => `<div class="check-row ${x.d ? 'done' : ''}" onclick="checklists[currentList][${i}].d=!checklists[currentList][${i}].d;renderChecklist();"><input type="checkbox" ${x.d ? 'checked' : ''} onclick="event.stopPropagation();checklists[currentList][${i}].d=!checklists[currentList][${i}].d;renderChecklist();"><span style="font-size:0.88rem;">${x.t}</span></div>`).join("");
+  }
+  function addCheckTask() { const i = document.getElementById("newTask"); if (!i.value.trim()) return; checklists[currentList].push({ t: i.value.trim(), d: false }); i.value = ""; renderChecklist(); }
+
+  // --- ROLE-BASED PORTAL ---
+  function renderPortal() {
+    if (!currentUser) return;
+    const box = document.getElementById("portalBody");
+    if (currentUser.role === "Tenant") {
+      box.innerHTML = `<div class="lock-card"><span class="lock-icon">🏠</span><h3>${lang === "bn" ? "আপনি ভাড়াটিয়া (Tenant) হিসেবে লগইন করেছেন" : "Logged in as Tenant (" + currentUser.name + ")"}</h3><p style="color:var(--muted); margin:8px 0 16px; font-size:0.9rem;">${lang === "bn" ? "বাড়িওয়ালা বা অ্যাডমিন প্যানেল দেখতে লগআউট করে landlord@gmail.com অথবা admin@gmail.com দিয়ে লগইন করুন।" : "To test property publishing or admin moderation, log out and sign in with landlord@gmail.com or admin@gmail.com."}</p><button class="btn" onclick="openModal('profileModal')">🔄 ${i18n[lang].switchAcc}</button></div>`;
+      return;
+    }
+
+    const areaOptions = Object.keys(areaDB).map(a => `<option value="${a}">${a} (${areaDB[a].region})</option>`).join("");
+    let html = `<div class="grid-2">`;
+    if (currentUser.role === "Landlord" || currentUser.role === "Admin") {
+      html += `
+        <div class="card">
+          <h3>🏢 ${lang === "bn" ? "বাড়িওয়ালা: নতুন বাসা যোগ করুন (AI চেক)" : "Landlord: Publish Property (AI Check)"}</h3>
+          <div class="field"><label>Property Title</label><input id="lTitle" placeholder="e.g., Bright 3-Bed Family Flat"></div>
+          <div class="form-grid">
+            <div class="field"><label>Area & Region</label><select id="lArea">${areaOptions}</select></div>
+            <div class="field"><label>Monthly Rent (৳)</label><input type="number" id="lRent" placeholder="22000"></div>
+          </div>
+          <div class="form-grid">
+            <div class="field"><label>Service Charge (৳)</label><input type="number" id="lService" placeholder="Leave blank to test AI check"></div>
+            <div class="field"><label>Facilities</label><input id="lFac" placeholder="Lift, Generator, Titas Gas, Wi-Fi"></div>
+          </div>
+          <div class="field">
+            <label>📝 Post Details / বাসার বিবরণ (সুবিধা, অসুবিধা ও অন্যান্য তথ্য)</label>
+            <textarea id="lDesc" rows="3" placeholder="বাসার সুবিধা-অসুবিধা, গ্যাস, পানি, কোন তলা এবং কখন ওঠা যাবে লিখুন..."></textarea>
+          </div>
+          <div class="field">
+            <label>📷 Upload House Photo / বাসার ছবি (Optional)</label>
+            <div class="upload-box" onclick="document.getElementById('lPhotoInp').click()">
+              <div style="font-size:0.8rem; color:var(--muted);">Click to choose house photo from device</div>
+              <input id="lPhotoInp" type="file" accept="image/*" style="display:none;" onchange="handlePhotoPick(event, 'home')">
+              <div class="upload-preview" id="lPhotoPrev"></div>
+            </div>
+          </div>
+          <div id="aiWarnBox" class="ai-card" style="display:none;"></div>
+          <button class="btn" onclick="publishListing()">✨ ${lang === "bn" ? "AI চেক ও পাবলিশ করুন" : "Run AI Check & Publish"}</button>
+        </div>`;
+    }
+
+    if (currentUser.role === "Admin") {
+      html += `
+        <div class="card">
+          <h3>🛡️ ${lang === "bn" ? "অ্যাডমিন মডারেশন ও ইউজার ম্যানেজমেন্ট" : "Admin Moderation & User Management"}</h3>
+          <p style="font-size:0.85rem; color:var(--muted);">Registered Accounts: <strong>${users.length}</strong> • Active Properties: <strong>${homes.length}</strong> • Covered Zones: <strong>4</strong></p>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            ${reports.map(r => `<div style="border:1px solid var(--border); padding:12px; border-radius:12px; display:flex; justify-content:space-between; align-items:center; gap:10px; background:var(--surface-alt);"><div><strong>${r.target}</strong> <span class="badge ${r.status === 'Pending' ? 'b-yellow' : 'b-green'}">${r.status}</span><div style="font-size:0.82rem; color:var(--muted); margin-top:2px;">${r.reason}</div></div>${r.status === "Pending" ? `<button class="btn-danger" onclick="resolveRep(${r.id})">Remove</button>` : ""}</div>`).join("")}
+          </div>
+        </div>`;
+    } else {
+      html += `<div class="lock-card" style="display:flex; flex-direction:column; justify-content:center;"><span class="lock-icon">🛡️</span><h3>${lang === "bn" ? "অ্যাডমিন প্যানেল সুরক্ষিত" : "Admin Panel Restricted"}</h3><p style="color:var(--muted); font-size:0.88rem; margin-top:8px;">${lang === "bn" ? "শুধুমাত্র অ্যাডমিন (admin@gmail.com) রিপোর্ট ও ইউজার ম্যানেজ করতে পারবেন।" : "Only Admins (admin@gmail.com) can access moderation controls."}</p></div>`;
+    }
+    html += `</div>`;
+    box.innerHTML = html;
+  }
+
+  function resolveRep(id) { reports = reports.map(r => r.id === id ? { ...r, status: "Resolved" } : r); renderPortal(); toast("🛡️ Flagged content removed."); }
+  function publishListing() {
+    const title = document.getElementById("lTitle").value.trim();
+    const area = document.getElementById("lArea").value;
+    const rent = Number(document.getElementById("lRent").value);
+    const service = document.getElementById("lService").value;
+    const fac = document.getElementById("lFac").value.trim();
+    const box = document.getElementById("aiWarnBox");
+    let miss = [];
+    if (!title) miss.push("Title"); if (!rent) miss.push("Monthly Rent"); if (!service) miss.push("Service Charge"); if (!fac) miss.push("Facilities");
+    if (miss.length) { box.style.display = "block"; box.innerHTML = `<div class="ai-header">✨ AI Listing Check — Missing Info</div><p style="font-size:0.85rem;">Please add: <strong>${miss.join(", ")}</strong></p>`; return; }
+    box.style.display = "none";
+    const reg = areaDB[area].region;
+    const desc = document.getElementById("lDesc") ? document.getElementById("lDesc").value.trim() : "";
+    homes.unshift({
+      id: Date.now(), title, area, region: reg, tag: "New Verified", rent, service: Number(service),
+      rooms: "3 Bed • 2 Bath", landlord: currentUser ? currentUser.name : "Verified Owner",
+      fac: fac.split(",").map(s => s.trim()), flood: areaDB[area].flood.split(" ")[0], score: 4.6,
+      colors: ["#0f766e", "#0d9488", "#fde047"], x: "50%", y: "48%", photo: uploadedHomePhoto, desc
+    });
+    uploadedHomePhoto = null;
+    if (document.getElementById("lPhotoPrev")) document.getElementById("lPhotoPrev").innerHTML = "";
+    if (document.getElementById("lDesc")) document.getElementById("lDesc").value = "";
+    renderHomes(); toast("✅ AI Check passed! Property published.");
+  }
+
+  // --- INIT ---
+  applyTheme();
+  applyLang();
+  syncAuthView();
+</script>
+</body>
+</html>
